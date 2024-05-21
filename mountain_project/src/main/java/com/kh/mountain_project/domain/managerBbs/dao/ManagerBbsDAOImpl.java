@@ -44,7 +44,7 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO{
     StringBuffer sql = new StringBuffer();
     sql.append(" UPDATE BBS");
     sql.append(" SET STATUS = 'D' ");
-    sql.append(" where bbs_id = in (:bbsIds) ");
+    sql.append(" where bbs_id in (:bbsIds) ");
 
     Map<String, List<Long>> map = Map.of("bbsIds", bbsIds);
     int deletedRowCnt = template.update(sql.toString(), map);
