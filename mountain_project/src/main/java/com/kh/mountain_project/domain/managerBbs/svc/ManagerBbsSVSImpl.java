@@ -15,17 +15,17 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
     this.managerBbsDAO = managerBbsDAO;
   }
   @Override
-  public List<ManagerBbs> mreadAll() {
-    return managerBbsDAO.mreadAll();
+  public List<ManagerBbs> mReadAll() {
+    return managerBbsDAO.mReadAll();
   }
 
   @Override
-  public List<ManagerBbs> mreadcomplain(Long bbsId) {
-    return managerBbsDAO.mreadcomplain(bbsId);
+  public List<ManagerBbs> mReadComplain(Long bbsId) {
+    return managerBbsDAO.mReadComplain(bbsId);
   }
 
   @Override
-  public int deletecomplain(List<Long> bbsIds) {
-    return managerBbsDAO.deletecomplain(bbsIds);
+  public int deleteComplain(List<Long> bbsIds) {
+    return managerBbsDAO.deleteComplain(bbsIds);
   }
 }

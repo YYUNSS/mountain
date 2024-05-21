@@ -32,7 +32,7 @@ public class ManagerBbsDAOTest {
   void deletecomplain(){
     // Given
     List<Long> bbsIds = Arrays.asList(1L, 2L);
-    int deletedRowCnt = managerBbsDAO.deletecomplain(bbsIds);
+    int deletedRowCnt = managerBbsDAO.deleteComplain(bbsIds);
     log.info("deletedRowCnt={} 삭제 완료");
   }
 }
