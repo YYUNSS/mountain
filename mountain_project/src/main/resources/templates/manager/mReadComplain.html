@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>신고글 처리</title>
+  <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+  </style>
+</head>
+<body>
+<h1>신고글 처리</h1>
+<form id="deleteForm" method="POST">
+  <table>
+    <thead>
+    <tr>
+      <th>BBS ID</th>
+      <th>Mountain Code</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Status</th>
+      <th>Creation Date</th>
+      <th>Update Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bbs : ${list}">
+      <td>
+        <!-- 각 행에 체크박스 추가 -->
+        <input type="checkbox" name="bbsIds" th:value="${bbs.bbsId}"/>
+      </td>
+      <td th:text="${bbs.bbsId}">BBS_ID</td>
+      <td th:text="${bbs.mntnCode}">MNTN_CODE</td>
+      <td th:text="${bbs.title}">TITLE</td>
+      <td th:text="${bbs.bcontent}">BCONTENT</td>
+      <td th:text="${bbs.status}">STATUS</td>
+      <td th:text="${bbs.cdate}">CDATE</td>
+      <td th:text="${bbs.udate}">UDATE</td>
+    </tr>
+    </tbody>
+  </table>
+  <!-- 일괄 삭제 버튼 -->
+  <button type="button" onclick="deleteSelectedBbs()">선택된 항목 삭제</button>
+</form>
+
+<script th:inline="javascript">
+  function deleteSelectedBbs() {
+    var selectedBbsIds = [];
+    var checkboxes = document.getElementsByName("bbsIds");
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        selectedBbsIds.push(checkboxes[i].value);
+      }
+    }
+    if (selectedBbsIds.length === 0) {
+      alert("삭제할 항목을 선택해주세요.");
+    } else {
+      if (confirm('선택한 ' + selectedBbsIds.length + '개의 항목을 삭제하시겠습니까?')) {
+        fetch('/mountain/manager/comBbs', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(selectedBbsIds)
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log(selectedBbsIds);
+            // 성공적으로 삭제된 경우에 대한 처리
+            location.reload(); // 페이지 새로고침
+          } else {
+            console.log(selectedBbsIds);
+            // 삭제에 실패한 경우에 대한 처리
+            alert('게시물 삭제에 실패하였습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting bbs:', error);
+          alert('게시물 삭제 중 오류가 발생하였습니다.');
+        });
+      }
+    }
+  }
+</script>
+</body>
+</html>

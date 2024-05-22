@@ -20,8 +20,8 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
   }
 
   @Override
-  public List<ManagerBbs> mReadComplain(Long bbsId) {
-    return managerBbsDAO.mReadComplain(bbsId);
+  public List<ManagerBbs> mReadComplain() {
+    return managerBbsDAO.mReadComplain();
   }
 
   @Override

@@ -29,7 +29,7 @@ public class ManagerBbsDAOTest {
 
   //삭제하기(상태만 변경)
   @Test
-  void deletecomplain(){
+  void deleteComplain(){
     // Given
     List<Long> bbsIds = Arrays.asList(1L, 2L);
     int deletedRowCnt = managerBbsDAO.deleteComplain(bbsIds);

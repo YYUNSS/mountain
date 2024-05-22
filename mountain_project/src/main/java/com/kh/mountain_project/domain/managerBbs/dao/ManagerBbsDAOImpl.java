@@ -29,7 +29,7 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO{
   }
 
   @Override
-  public List<ManagerBbs> mReadComplain(Long bbsId) {
+  public List<ManagerBbs> mReadComplain() {
     StringBuffer sql = new StringBuffer();
     sql.append(" select BBS_ID, MNTN_CODE, TITLE, BCONTENT, STATUS, CDATE, UDATE ");
     sql.append(" from BBS ");
@@ -50,4 +50,5 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO{
     int deletedRowCnt = template.update(sql.toString(), map);
     return deletedRowCnt;
   }
+
 }

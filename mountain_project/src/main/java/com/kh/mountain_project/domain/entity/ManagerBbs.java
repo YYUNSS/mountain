@@ -1,7 +1,10 @@
 package com.kh.mountain_project.domain.entity;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class ManagerBbs {
   // BBS_ID	게시글번호  NUMBER	10
   private Long bbsId;
@@ -10,7 +13,7 @@ public class ManagerBbs {
   private Long mntnCode;
 
   // TITLE	제목 VARCHAR2	150
-  private String bbstitle;
+  private String title;
 
   // MEMBER_ID	작성자멤버ID NUMBER	8
   private Long memberId;

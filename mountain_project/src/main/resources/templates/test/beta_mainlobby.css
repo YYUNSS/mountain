@@ -1,0 +1,707 @@
+/* 라인 정비 */
+*{outline: 1px solid red;}
+
+/* 전체 데이터 [폰트 및 전체 데이터] */
+body{
+  margin: 0;
+  padding: 0;
+}
+
+.main_body{
+  width: 100%;
+  padding-top: 0px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 0px auto 200px;
+  grid-template-areas: 
+      "header"
+      "main"
+      "footer"
+  ;
+
+}
+
+/* [폰트] */
+
+.mountain_color{
+  margin: 0px 0px 0px 10px;
+  background-color: #173221;
+}
+
+.blog_color{
+  margin: 0px 30px 0px 30px;
+  background-color: #173221;
+}
+
+.header_icon{
+  padding-top: -1px;
+  color:  #3b5240;
+  font-size: 40px;
+}
+
+.temperature_icon{
+  padding-top: -1px;
+  color:  white;
+  font-size: 60px;
+}
+
+.fire_icon{
+  padding-top: -1px;
+  color:  #173221;
+  font-size: 40px;
+}
+
+.blog_icon{
+  padding-top: -1px;
+  color:  #173221;
+  font-size: 30px;
+}
+
+.temperature_font{
+  margin: 0;
+  color:  white;
+}
+
+.fire_font{
+  margin: 0;
+  color:  #173221;
+}
+
+.in_header_text{
+  color: white;
+}
+
+/* 해더 정보 데이터 */
+
+.header{
+  grid-area: header;
+  width: 100%;
+  position: fixed;
+  display: grid;
+  height: 100%;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 9fr;
+  grid-template-areas: 
+      "background_logo"
+      "background_menu"
+  ;
+}
+
+.background_logo{
+  grid-area: background_logo;
+  width: auto;
+  display: grid;
+  grid-template-columns: 200px auto 200px;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "dummy logo_box login"
+  ;
+  background-color:  #eee9d6;
+}
+
+.logo_box{
+  grid-area: logo_box;
+  text-align: center;
+  align-items: center;
+}
+
+.logo{
+  
+  width: 100px;
+  height: 100px;
+  border: "0";
+}
+
+.login{
+  grid-area: login;
+  text-align: end;
+  align-items:start;
+}
+
+/* 해더 메뉴얼 */
+
+.background_menu{
+  grid-area: background_menu;
+  width: auto;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 100px auto 100px;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "header_menu header_dummy header_search"
+  ;
+}
+
+.header_menu{
+  grid-area: header_menu;
+  display: flex;
+  background-color:  #eee9d6;
+  justify-content: center;
+  align-items: center;
+}
+.header_dummy{
+  grid-area: header_dummy;
+}
+.header_search{
+  grid-area: header_search;
+  display: flex;
+  background-color:  #eee9d6;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 메인 */
+
+.main{
+  margin-top: 70px;
+  background-color:  #eee9d6;
+  grid-area: main;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 300px auto 300px;
+  grid-template-rows: 800px 500px 500px 700px;
+  grid-template-areas: 
+      "in_header in_header in_header"
+      "dummy3 weather dummy4"
+      "dummy5 mountain dummy6"
+      "dummy7 blog dummy8"
+  ;
+}
+
+/* 거리 띄우기 */
+.down{
+  margin-top: 70px;
+  height: 100%;
+}
+/* 사진 데이터 */
+
+.in_header{
+    grid-area: in_header;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url(https://cdn.pixabay.com/photo/2020/04/09/19/02/lemon-5022745_1280.jpg);
+    box-sizing: border-box;
+    background-size: cover;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center,center;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+}
+
+.in_header_box{
+  padding: 0px 0px 100px 300px;
+}
+
+/* 날씨 데이터 */
+
+.weather{
+  
+  height: 100%;
+  grid-area: weather;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 2fr ;
+  grid-template-areas: 
+      "temperature fire"
+      "rain chart"
+  ;
+}
+
+/* 온도 */
+
+.temperature{
+  grid-area: temperature;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_temperature{
+  background-color: #173221;
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 5fr 2fr;
+  grid-template-rows: auto ;
+  grid-template-areas: 
+      "temperature_text temperature_icon"
+  ;
+}
+
+.temperature_text{
+  margin: 0px 0px 0px 30px;
+  grid-area: temperature_text;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.in_temperature_text{
+  margin: 0;
+  height: 70%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: auto ;
+  grid-template-rows: 1fr 1fr ;
+  grid-template-areas: 
+      "temperature_name"
+      "temperature_area"
+  ;
+}
+
+.temperature_icon{
+  grid-area: temperature_icon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 산불 */
+
+.fire{
+  grid-area: fire;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_fire{
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  grid-template-rows: auto ;
+  grid-template-areas: 
+      "fire_icon fire_text"
+  ;
+}
+
+.fire_icon{
+  grid-area: fire_icon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fire_text{
+  grid-area: fire_text;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.in_fire_text{
+  margin: 0;
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  grid-template-rows: auto ;
+  grid-template-areas: 
+      "area_name fire_name"
+  ;
+}
+
+.area_name{
+  margin: 0px 0px 0px 30px;
+  grid-area: area_name;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.fire_name{
+  margin: 0px 0px 0px 30px;
+  grid-area: fire_name;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+/* 기상 */
+.rain{
+  
+  grid-area: rain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_rain{
+  margin: 0;
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:  1fr 1fr;
+  grid-template-areas: 
+      "precipitation morning"
+      "UV_rays evening"
+  ;
+}
+
+.rain_text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.precipitation{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.in_precipitation{
+  margin: 0;
+  height: 70%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:  auto;
+  grid-template-areas: 
+      "precipitation_icon precipitation_text"
+  ;
+}
+
+.morning{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.in_morning{
+  margin: 0;
+  height: 70%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:  auto;
+  grid-template-areas: 
+      "morning_icon morning_text"
+  ;
+}
+
+.UV_rays{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.in_UV_rays{
+  margin: 0;
+  height: 70%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:  auto;
+  grid-template-areas: 
+      "UV_rays_icon UV_rays_text"
+  ;
+}
+
+.evening{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.in_evening{
+  margin: 0;
+  height: 70%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows:  auto;
+  grid-template-areas: 
+      "evening_icon evening_text"
+  ;
+}
+
+/* 그래프 */
+
+.chart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_chart{
+  margin: 0;
+  height: 80%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 9fr;
+  grid-template-areas: 
+      "chart_name"
+      "chart_log"
+  ;
+}
+
+/* 산 데이터 */
+
+.mountain{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_mountain{
+  margin: 0;
+  height: 90%;
+  width: 90%;
+  display: grid;
+  grid-template-columns:1fr 1fr 7fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "mountain1 mountain2 mountain3"
+  ;
+}
+.mountain3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.in_mountain3{
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 5fr 1fr;
+  grid-template-areas: 
+      "mountain_data1 mountain_data2"
+      "mountain_data3 mountain_data4"
+  ;
+}
+
+.mountain_data1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mountain_img{
+  height: 90%;
+  width: 90%;
+  margin: 0;
+  padding: 0;
+  background-image: url(https://cdn.pixabay.com/photo/2020/04/09/19/02/lemon-5022745_1280.jpg);
+  box-sizing: border-box;
+  background-size: cover;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center,center;
+}
+
+
+
+
+/* 블로그 데이터 */
+
+.blog{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in_blog{
+  margin: 0;
+  height: 90%;
+  width: 90%;
+  display: grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "blog1 blog2"
+  ;
+}
+
+.blog_data{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.in_blog_data{
+  height: 95%;
+  width: 95%;
+  background-color: white;
+}
+.in_blog1{
+  display: grid;
+  grid-template-columns:auto;
+  grid-template-rows: 1fr 7fr 1fr 1fr 1fr;
+  grid-template-areas: 
+      "blog1_name"
+      "blog1_poto"
+      "blog1_title"
+      "blog1_text"
+      "blog1_log"
+  ;
+}
+
+.in_blog2{
+  display: grid;
+  grid-template-columns:auto;
+  grid-template-rows: 1fr 7fr 1fr 1fr 1fr;
+  grid-template-areas: 
+      "blog2_name"
+      "blog2_poto"
+      "blog2_title"
+      "blog2_text"
+      "blog2_log"
+  ;
+}
+
+.blog1_poto{
+  margin: 0;
+  padding: 0;
+  background-image: url(https://cdn.pixabay.com/photo/2020/04/09/19/02/lemon-5022745_1280.jpg);
+  box-sizing: border-box;
+  background-size: cover;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center,center;
+}
+
+.blog2_poto{
+  margin: 0;
+  padding: 0;
+  background-image: url(https://cdn.pixabay.com/photo/2020/04/09/19/02/lemon-5022745_1280.jpg);
+  box-sizing: border-box;
+  background-size: cover;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-position: center,center;
+}
+
+.blog1_name{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog2_name{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog1_title{
+  margin: 0;
+  display: grid;
+  grid-template-columns:5fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "blog1_input bookmark1"
+  ;
+}
+
+.blog2_title{
+  margin: 0;
+  display: grid;
+  grid-template-columns:5fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "blog2_input bookmark2"
+  ;
+}
+
+.blog1_input{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog2_input{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.bookmark1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookmark2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog1_text{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog2_text{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog1_log{
+  margin: 0;
+  display: grid;
+  grid-template-columns:5fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "blog1_input bookmark1"
+  ;
+}
+
+.blog2_log{
+  margin: 0;
+  display: grid;
+  grid-template-columns:5fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+      "blog2_input bookmark2"
+  ;
+}
+
+.blog1_log_input{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.blog2_log_input{
+  margin: 0px 0px 0px 30px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.log_bookmark1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.log_bookmark2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 푸터 */
+
+.footer{
+  width: 100%;
+  grid-area: footer;
+  background-color:  #173221;
+}

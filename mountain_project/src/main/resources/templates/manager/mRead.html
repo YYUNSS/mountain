@@ -1,13 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>관리자 조회화면</title>
+  <link rel="stylesheet" type="text/css" href="/common/css/color.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/common.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/gnb.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/header.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/footer.css">
+  <link rel="stylesheet" type="text/css" href="/common/css/searchbar.css">
+
+
+  <title>관리자 게시글 전체 조회</title>
+  <style>
+    table {
+      width: 50%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
 </head>
 
-<body>
-  <h1>관리자 조회화면</h1>
+<body class="font-pretendard-regular">
+  <header>
+    <div class="title">
+      <div class="righttitle">
+        <div class="menus"></div>
+        <div class="sns"></div>
+      </div>
+    </div>
+    <div class="searchbar"></div>
+  </header>
+  <main>
+    <h1>관리자 게시글 전체 조회</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>BBS ID</th>
+          <th>Mountain Code</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Status</th>
+          <th>Creation Date</th>
+          <th>Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="bbs : ${list}">
+          <td th:text="${bbs.bbsId}">BBS_ID</td>
+          <td th:text="${bbs.mntnCode}">MNTN_CODE</td>
+          <td th:text="${bbs.title}">TITLE</td>
+          <td th:text="${bbs.bcontent}">BCONTENT</td>
+          <td th:text="${bbs.status}">STATUS</td>
+          <td th:text="${bbs.cdate}">CDATE</td>
+          <td th:text="${bbs.udate}">UDATE</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
 </body>
 
 </html>

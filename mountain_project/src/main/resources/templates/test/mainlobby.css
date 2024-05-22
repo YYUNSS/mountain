@@ -1,0 +1,297 @@
+/* 라인 채크 */
+*{outline: 1px solid red;}
+
+/* 전체 바디 클래스 */
+html{
+    scroll-behavior: smooth;
+}
+
+.main_bady{
+    background-color:  #eee9d6;
+    margin: 0;
+    padding: 0;
+}
+.background_icon{
+    text-align: center;
+}
+.font_icon{
+    padding-top: -1px;
+    color:  #3b5240;
+    font-size: 40px;
+   
+}
+.font_icon_white{
+    justify-content: center;
+    padding-top: -1px;
+    color:  #ffffff;
+    font-size: 40px;
+   
+}
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.font{
+    margin: 0px 0px 0px 20px;
+    color:  #ffff;
+}
+
+.maindbady_Grid{
+    padding-top: 500px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 30px auto 70px;
+    grid-template-areas: 
+        "header"
+        "main"
+        "footer"
+    ;
+}
+
+/* 해더 데이터 클래스 */
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    grid-area: header;
+    background-color:  #eee9d6;
+}
+
+.background_logo{
+    text-align: center;
+}
+
+.logo{
+    width: 100px;
+    height: 100px;
+    border: "0";
+}
+.header_img{
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    background-image: url(https://cdn.pixabay.com/photo/2020/04/09/19/02/lemon-5022745_1280.jpg);
+    box-sizing: border-box;
+    background-size: cover;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center,center;
+    display: inline-block;
+}
+.title_data{
+    
+    height: 100%;
+    margin: 0;
+    
+    display: flex;
+    justify-content: start; 
+    align-items: end;
+}
+.title_tag{
+    padding: 0px 0px 40px 30px;
+}
+.title_name{
+    
+    color: white;
+    
+}
+
+/* 메뉴 사진 검색 */
+.line{
+    align-items: center;
+    background-color:  #eee9d6;
+    display: grid;
+    grid-template-columns: 50px auto 50px ;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "menu main_img search"
+    ;
+}
+
+/* 메인 데이터 클래스 */
+.main{
+    margin: 60px 0px 60px 0px;
+    padding-bottom: 30px;
+    grid-area: main;
+    background-color:  #eee9d6;
+    display: grid;
+    grid-template-columns: 70px auto 70px ;
+    grid-template-rows: 25% 35% 40%;
+    grid-template-areas: 
+        "dummy1 weather dummy2"
+        "dummy3 mountain dummy4"
+        "dummy5 blog dummy6"
+    ;
+}
+
+
+.weather{
+    grid-area: weather;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr ;
+    grid-template-areas: 
+        "temperature fire"
+        "rain chart"
+    ;
+}
+
+.temperature{
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 10px 10px;
+    background-color:  #173221;
+
+}
+.in_temperature{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 5fr 1fr ;
+    grid-template-rows:auto;
+    grid-template-areas: 
+        "weather_log weather_icon"
+    ;
+}
+
+.weather_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fire{
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 3fr ;
+    grid-template-rows:auto;
+    grid-template-areas: 
+        "icon in_fire"
+    ;
+}
+
+.in_fire{
+    grid-area: in_fire;
+    display: grid;
+    grid-template-columns:auto;
+    grid-template-rows: 1fr 1fr ;
+    grid-template-areas: 
+        "name1 name2"
+        "data1 data2"
+    ;
+}
+
+.rain{
+    grid-area: rain;
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr 1fr ;
+    grid-template-areas: 
+        "rain_data1 rain_data2"
+        "rain_data3 rain_data4"
+    ;
+}
+
+.rain_data1{
+    align-items: center;
+    grid-area: rain_data1;
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "rain1_icon rain1_data"
+    ;
+}
+.rain_data2{
+    align-items: center;
+    grid-area: rain_data2;
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "rain2_icon rain2_data"
+    ;
+}
+.rain_data3{
+    align-items: center;
+    grid-area: rain_data3;
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "rain3_icon rain3_data"
+    ;
+}
+.rain_data4{
+    align-items: center;
+    grid-area: rain_data4;
+    margin: 10px 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "rain4_icon rain4_data"
+    ;
+}
+
+.mountain{
+    grid-area: mountain;
+    height: 350px;
+    margin: 40px 10px 40px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr ;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "rain_data1 rain_data2 rain_data3"
+    ;
+}
+
+.mountain_data1{
+    margin: 10px 10px 10px 10px;
+}
+.mountain_data2{
+    margin: 10px 10px 10px 10px;
+}
+.mountain_data3{
+    margin: 10px 10px 10px 10px;
+}
+
+.mountain_color{
+    background-color: #173221;
+}
+
+.blog{
+    grid-area: blog;
+    height: 450px;
+    margin: 40px 30px 40px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto ;
+    grid-template-areas: 
+        "blog_data1 blog_data2 "
+    ;
+}
+
+.blog_data1{
+    margin: 20px 20px 20px 20px;
+}
+
+.blog_data2{
+    margin: 20px 20px 20px 20px;
+}
+
+/* 푸터 데이터 클래스 */
+.footer{
+    height: 130px;
+    grid-area: footer;
+    background-color: #173221;
+}

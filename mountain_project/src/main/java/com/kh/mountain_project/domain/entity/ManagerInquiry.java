@@ -1,5 +1,8 @@
 package com.kh.mountain_project.domain.entity;
 
+import lombok.Data;
+
+@Data
 public class ManagerInquiry {
 
   // Inquiry_id	문의글 아이디			NUMBER	10
