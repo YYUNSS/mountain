@@ -28,4 +28,24 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
   public int deleteComplain(List<Long> bbsIds) {
     return managerBbsDAO.deleteComplain(bbsIds);
   }
+
+  @Override
+  public List<ManagerBbs> viewBbsAll() {
+    return managerBbsDAO.viewBbsAll();
+  }
+
+  @Override
+  public List<ManagerBbs> searchByTitle(String title) {
+    return managerBbsDAO.searchByTitle(title);
+  }
+
+  @Override
+  public List<ManagerBbs> searchBymntnNm(String mntnNm) {
+    return managerBbsDAO.searchBymntnNm(mntnNm);
+  }
+
+  @Override
+  public List<ManagerBbs> searchBynickname(String nickname) {
+    return managerBbsDAO.searchBynickname(nickname);
+  }
 }
