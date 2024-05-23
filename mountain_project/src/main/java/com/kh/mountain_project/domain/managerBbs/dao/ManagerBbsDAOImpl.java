@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,30 +106,33 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
     return list;
   }
 
-  //제목으로 게시글 찾기
+  // 제목으로 게시글 찾기
   @Override
   public List<ManagerBbs> searchByTitle(String title) {
-    String query = " SELECT " +
+    String query = "SELECT " +
             " m.member_id AS member_id, " +
             " m.nickname AS member_nickname, " +
             " b.bbs_id AS bbs_id , " +
             " b.title AS bbs_title, " +
             " b.bcontent AS bbs_content, " +
-            " b.hit As bbs_hit, " +
+            " b.hit AS bbs_hit, " +
             " b.staring AS bbs_staring, " +
-            " b.ctime As bbs_ctime, " +
-            " b.status As bbs_status, " +
+            " b.ctime AS bbs_ctime, " +
+            " b.status AS bbs_status, " +
             " b.cdate AS bbs_cdate, " +
             " b.udate AS bbs_udate, " +
             " mt.MNTN_CODE AS mountain_code, " +
             " mt.MNTN_NM AS mountain_name, " +
-            " mt.MNTN_loc as mountain_loc " +
+            " mt.MNTN_loc AS mountain_loc " +
             " FROM bbs b " +
             " RIGHT JOIN member m ON m.member_id = b.member_id " +
             " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
-            " Where b.status != 'D' and b.title like '%:title%' ";
+            " WHERE b.status != 'D' AND b.title LIKE :title";
 
-    List<ManagerBbs> list = template.query(query, (ResultSet rs) -> {
+    Map<String, Object> params = new HashMap<>();
+    params.put("title", "%" + title + "%");
+
+    List<ManagerBbs> list = template.query(query, params, (ResultSet rs) -> {
       List<ManagerBbs> resultList = new ArrayList<>();
       while (rs.next()) {
         ManagerBbs managerBbs = new ManagerBbs();
@@ -155,29 +159,33 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
     return list;
   }
 
+  //산이름으로 게시글 찾기
   @Override
   public List<ManagerBbs> searchBymntnNm(String mntnNm) {
-    String query = " SELECT " +
+    String query = "SELECT " +
             " m.member_id AS member_id, " +
             " m.nickname AS member_nickname, " +
-            " b.bbs_id AS bbs_id , " +
+            " b.bbs_id AS bbs_id, " +
             " b.title AS bbs_title, " +
             " b.bcontent AS bbs_content, " +
-            " b.hit As bbs_hit, " +
+            " b.hit AS bbs_hit, " +
             " b.staring AS bbs_staring, " +
-            " b.ctime As bbs_ctime, " +
-            " b.status As bbs_status, " +
+            " b.ctime AS bbs_ctime, " +
+            " b.status AS bbs_status, " +
             " b.cdate AS bbs_cdate, " +
             " b.udate AS bbs_udate, " +
             " mt.MNTN_CODE AS mountain_code, " +
             " mt.MNTN_NM AS mountain_name, " +
-            " mt.MNTN_loc as mountain_loc " +
+            " mt.MNTN_loc AS mountain_loc " +
             " FROM bbs b " +
             " RIGHT JOIN member m ON m.member_id = b.member_id " +
             " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
-            " Where b.status != 'D' and mt.MNTN_NM like '%:mntnNm%' ";
+            " WHERE b.status != 'D' AND mt.MNTN_NM LIKE :mntnNm";
 
-    List<ManagerBbs> list = template.query(query, (ResultSet rs) -> {
+    Map<String, Object> params = new HashMap<>();
+    params.put("mntnNm", "%" + mntnNm + "%");
+
+    List<ManagerBbs> list = template.query(query, params, (ResultSet rs) -> {
       List<ManagerBbs> resultList = new ArrayList<>();
       while (rs.next()) {
         ManagerBbs managerBbs = new ManagerBbs();
@@ -204,30 +212,33 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
     return list;
   }
 
-  //작성자 닉네임으로 게시글 찾기
+  // 작성자 닉네임으로 게시글 찾기
   @Override
   public List<ManagerBbs> searchBynickname(String nickname) {
-    String query = " SELECT " +
+    String query = "SELECT " +
             " m.member_id AS member_id, " +
             " m.nickname AS member_nickname, " +
-            " b.bbs_id AS bbs_id , " +
+            " b.bbs_id AS bbs_id, " +
             " b.title AS bbs_title, " +
             " b.bcontent AS bbs_content, " +
-            " b.hit As bbs_hit, " +
+            " b.hit AS bbs_hit, " +
             " b.staring AS bbs_staring, " +
-            " b.ctime As bbs_ctime, " +
-            " b.status As bbs_status, " +
+            " b.ctime AS bbs_ctime, " +
+            " b.status AS bbs_status, " +
             " b.cdate AS bbs_cdate, " +
             " b.udate AS bbs_udate, " +
             " mt.MNTN_CODE AS mountain_code, " +
             " mt.MNTN_NM AS mountain_name, " +
-            " mt.MNTN_loc as mountain_loc " +
+            " mt.MNTN_loc AS mountain_loc " +
             " FROM bbs b " +
             " RIGHT JOIN member m ON m.member_id = b.member_id " +
             " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
-            " Where b.status != 'D' and m.nickname like '%:nickname%' ";
+            " WHERE b.status != 'D' AND m.nickname LIKE :nickname";
 
-    List<ManagerBbs> list = template.query(query, (ResultSet rs) -> {
+    Map<String, Object> params = new HashMap<>();
+    params.put("nickname", "%" + nickname + "%");
+
+    List<ManagerBbs> list = template.query(query, params, (ResultSet rs) -> {
       List<ManagerBbs> resultList = new ArrayList<>();
       while (rs.next()) {
         ManagerBbs managerBbs = new ManagerBbs();
@@ -253,4 +264,5 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
     });
     return list;
   }
+
 }

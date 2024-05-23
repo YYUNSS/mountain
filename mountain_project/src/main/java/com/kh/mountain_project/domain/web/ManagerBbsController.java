@@ -51,8 +51,8 @@ public class ManagerBbsController {
 
   @GetMapping("/search")
   public String search(
-          @RequestParam String searchType,
-          @RequestParam String keyword,
+          @RequestParam(name = "searchType") String searchType,
+          @RequestParam(name = "keyword") String keyword,
           Model model
   ) {
     List<ManagerBbs> list;
@@ -67,8 +67,6 @@ public class ManagerBbsController {
       case "nickname":
         list = managerBbsSVC.searchBynickname(keyword);
         break;
-      case "all":
-        list = managerBbsSVC.viewBbsAll();
       default:
         list = new ArrayList<>(); // 기본 빈 리스트
         break;

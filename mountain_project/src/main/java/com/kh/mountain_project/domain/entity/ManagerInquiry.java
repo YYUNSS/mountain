@@ -10,6 +10,9 @@ public class ManagerInquiry {
 
   // MEMBER_ID	작성자멤버ID			NUMBER	8
   private Long memberId;
+  
+  // 닉네임
+  private String nickname;
 
   // Inquiry_title	문의 제목			VARCHAR2	150
   private String inquiryTitle;
@@ -22,4 +25,7 @@ public class ManagerInquiry {
 
   // Inquiry_state	문의 상태			VARCHAR2
   private Character inquiryState;
+
+//문의 작성일 문의 수정일
+  //답변 작성일 답변 수정일
 }
