@@ -1,0 +1,124 @@
+package com.kh.mountain_project.domain.web;
+
+import com.kh.mountain_project.domain.entity.ManagerBbs;
+import com.kh.mountain_project.domain.entity.ManagerInquiry;
+import com.kh.mountain_project.domain.managerBbs.svc.ManagerBbsSVC;
+import com.kh.mountain_project.domain.managerInquiry.svc.ManagerInquirySVC;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@Controller
+@RequestMapping("/manager")
+@RequiredArgsConstructor
+public class ManagerController {
+  private final ManagerBbsSVC managerBbsSVC;
+  private final ManagerInquirySVC managerInquirySVC;
+
+  @GetMapping("/main")
+  public String home() {
+    return "manager/main";
+  }
+  @GetMapping("/viewBbsAll")
+  public String getAllBbs(Model model) {
+    List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
+    model.addAttribute("list", list);
+    log.info("list = {}", list);
+    return "manager/mReadBbs";
+  }
+
+  @GetMapping("/searchBbs")
+  public String search(
+          @RequestParam(name = "searchType") String searchType,
+          @RequestParam(name = "keyword") String keyword,
+          Model model
+  ) {
+    List<ManagerBbs> list;
+
+    switch (searchType) {
+      case "title":
+        list = managerBbsSVC.searchByTitle(keyword);
+        break;
+      case "mntnName":
+        list = managerBbsSVC.searchBymntnNm(keyword);
+        break;
+      case "nickname":
+        list = managerBbsSVC.searchBynickname(keyword);
+        break;
+      default:
+        list = new ArrayList<>(); // 기본 빈 리스트
+        break;
+    }
+
+    model.addAttribute("list", list);
+    log.info("list={}",list);
+    return "manager/msearchResults";
+  }
+  @GetMapping("/comBbs")
+  public String mReadComplain(Model model){
+    List<ManagerBbs> list = managerBbsSVC.mReadComplain();
+    model.addAttribute("list", list);
+    log.info("list={}",list);
+    return "manager/mReadComplain";
+  }
+
+  @PatchMapping("/comBbs")
+  public ResponseEntity<Void> deleteComplains(@RequestBody List<Long> bbsIds) {
+    try {
+      managerBbsSVC.deleteComplain(bbsIds);
+      return ResponseEntity.noContent().build();
+    } catch (Exception e) {
+      log.error("신고글 삭제 실패! 사유: {}", e.getMessage(), e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  @GetMapping("/viewInquiryAll")
+  public String viewInquiryAll(Model model) {
+    List<ManagerInquiry> list = managerInquirySVC.viewInquiryAll();
+    model.addAttribute("list", list);
+    log.info("list = {}", list);
+    return "manager/mReadInquiry";
+  }
+  @GetMapping("/plot")
+  public String showplot(Model model){
+    String  INTERPRETER_PATH = "d:/kdt/anaconda3/python.exe";
+    final String SOURCE_PATH = "d:/kdt/projects/pythonDemo2/visualization";
+    // 파이썬 스크립트 실행
+    ProcessBuilder processBuilder = new ProcessBuilder( INTERPRETER_PATH, "review_data_mountain.py");
+    processBuilder.directory(new File(SOURCE_PATH));
+
+//    외부 스크립트 파일 실행 결과를 저장하기 위한 문자열 객체
+    StringBuilder result = new StringBuilder();
+
+    try {
+      Process process = processBuilder.start();  //외부 스크립트 실행
+//      외부 스크립트 실행 결과를 읽어들여 메모리에 저장
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+      String line;
+      while ((line = reader.readLine()) != null) {
+        result.append(line);
+      }
+      process.waitFor();
+    } catch (IOException | InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    // base64 인코딩된 이미지 데이터를 모델에 추가
+    model.addAttribute("imageData", result.toString());
+    return "manager/plot";
+  }
+}
+

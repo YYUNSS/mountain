@@ -1,0 +1,41 @@
+  <!DOCTYPE html>
+  <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>게시판 조회</title>
+  </head>
+  <body>
+  <h1>문의글 조회</h1>
+
+  <form th:action="@{/manager/searchInquiry}" method="get">
+    <input type="text" name="keyword" placeholder="검색어 입력">
+    <button type="submit">검색</button>
+  </form>
+
+  <table border="1">
+    <thead>
+    <tr>
+      <th>문의글 ID</th>
+      <th>작성자 ID</th>
+      <th>닉네임</th>
+      <th>문의 제목</th>
+      <th>문의 상태</th>
+      <th>문의 작성일</th>
+      <th>문의 수정일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="inquiry : ${list}">
+      <td th:text="${inquiry.inquiryId}"></td>
+      <td th:text="${inquiry.memberId}"></td>
+      <td th:text="${inquiry.nickname}"></td>
+      <td th:text="${inquiry.inquiryTitle}"></td>
+      <td th:text="${inquiry.inquiryState}"></td>
+      <td th:text="${inquiry.inquiryCdate}"></td>
+      <td th:text="${inquiry.inquiryUdate}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  </body>
+  </html>

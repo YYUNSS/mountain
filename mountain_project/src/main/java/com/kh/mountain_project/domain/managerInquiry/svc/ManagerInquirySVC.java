@@ -1,4 +1,10 @@
 package com.kh.mountain_project.domain.managerInquiry.svc;
 
+import com.kh.mountain_project.domain.entity.ManagerInquiry;
+
+import java.util.List;
+
 public interface ManagerInquirySVC {
+  List<ManagerInquiry> viewInquiryAll();
+
 }

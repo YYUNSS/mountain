@@ -1,9 +1,22 @@
 package com.kh.mountain_project.domain.managerInquiry.svc;
 
+import com.kh.mountain_project.domain.entity.ManagerInquiry;
+import com.kh.mountain_project.domain.managerInquiry.dao.ManagerInquiryDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
 public class ManagerInquirySVCImpl implements ManagerInquirySVC {
+  private ManagerInquiryDAO managerInquiryDAO;
+
+  ManagerInquirySVCImpl(ManagerInquiryDAO managerInquiryDAO){
+    this.managerInquiryDAO = managerInquiryDAO;
+  }
+  @Override
+  public List<ManagerInquiry> viewInquiryAll() {
+    return managerInquiryDAO.viewInquiryAll();
+  }
 }

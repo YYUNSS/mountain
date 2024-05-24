@@ -23,29 +23,26 @@
   <table>
     <thead>
     <tr>
-      <th>BBS ID</th>
-      <th>Mountain Code</th>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Status</th>
-      <th>Creation Date</th>
-      <th>Update Date</th>
-      <th>Actions</th>
+      <th>선택</th>
+      <th>게시글 번호</th>
+      <th>산 코드</th>
+      <th>제목</th>
+      <th>내용</th>
+      <th>상태</th>
+      <th>작성일</th>
+      <th>수정일</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="bbs : ${list}">
-      <td>
-        <!-- 각 행에 체크박스 추가 -->
-        <input type="checkbox" name="bbsIds" th:value="${bbs.bbsId}"/>
-      </td>
-      <td th:text="${bbs.bbsId}">BBS_ID</td>
-      <td th:text="${bbs.mntnCode}">MNTN_CODE</td>
-      <td th:text="${bbs.title}">TITLE</td>
-      <td th:text="${bbs.bcontent}">BCONTENT</td>
-      <td th:text="${bbs.status}">STATUS</td>
-      <td th:text="${bbs.cdate}">CDATE</td>
-      <td th:text="${bbs.udate}">UDATE</td>
+      <td><input type="checkbox" name="bbsIds" th:value="${bbs.bbsId}"/></td>
+      <td th:text="${bbs.bbsId}">게시글 번호</td>
+      <td th:text="${bbs.mntnCode}">산 코드</td>
+      <td th:text="${bbs.title}">글 제목</td>
+      <td th:text="${bbs.bcontent}">내용</td>
+      <td th:text="${bbs.status}">상태</td>
+      <td th:text="${bbs.cdate}">작성일</td>
+      <td th:text="${bbs.udate}">수정일</td>
     </tr>
     </tbody>
   </table>
@@ -66,7 +63,7 @@
       alert("삭제할 항목을 선택해주세요.");
     } else {
       if (confirm('선택한 ' + selectedBbsIds.length + '개의 항목을 삭제하시겠습니까?')) {
-        fetch('/mountain/manager/comBbs', {
+        fetch('/manager/comBbs', {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'

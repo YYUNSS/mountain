@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>검색 결과</h1>
-<form th:action="@{/manager/search}" method="get" onsubmit="handleSearch(event)">
+<form th:action="@{/manager/searchBbs}" method="get" onsubmit="handleSearch(event)">
   <select name="searchType">
     <option value="all" selected> 전체</option>
     <option value="title">제목</option>
@@ -24,6 +24,7 @@
   <input type="text" name="keyword" placeholder="검색어" />
   <button type="submit">검색</button>
 </form>
+<h3><a href="http://localhost:9090/manager/comBbs "> 신고글</a></h3>
 <table>
   <thead>
   <tr>

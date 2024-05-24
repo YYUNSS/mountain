@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>검색 결과</h1>
-<form th:action="@{/manager/search}" method="get" onsubmit="handleSearch(event)">
+<form th:action="@{/manager/searchBbs}" method="get" onsubmit="handleSearch(event)">
   <select name="searchType">
     <option value="all" selected> 전체</option>
     <option value="title">제목</option>
@@ -37,7 +37,6 @@
     <th>수정일</th>
     <th>산 이름</th>
     <th>글 상태</th>
-
   </tr>
   </thead>
   <tbody>

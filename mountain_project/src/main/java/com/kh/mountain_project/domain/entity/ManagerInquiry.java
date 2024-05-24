@@ -2,6 +2,8 @@ package com.kh.mountain_project.domain.entity;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ManagerInquiry {
 
@@ -24,8 +26,20 @@ public class ManagerInquiry {
   private String inquiryComment;
 
   // Inquiry_state	문의 상태			VARCHAR2
-  private Character inquiryState;
+  private String inquiryState;
 
 //문의 작성일 문의 수정일
-  //답변 작성일 답변 수정일
+//Inquiry_cdate
+//Inquiry_udate
+  private LocalDateTime inquiryCdate;
+  private LocalDateTime inquiryUdate;
+
+// 답변 작성일 답변 수정일
+// Inquiry_comment_cdate
+// Inquiry_comment_udate
+
+  private LocalDateTime inquiryCommentCdate;
+  private LocalDateTime inquiryCommentUdate;
+
+
 }
