@@ -27,6 +27,9 @@ public interface ManagerBbsDAO {
   // 회원 닉네임으로 게시글 찾기
   List <ManagerBbs> searchBynickname(String nickname);
 
+  // 전체 검색
+  List <ManagerBbs> searchByAll(String keyword);
+
   //단건 조회(상세조회)
 
 }

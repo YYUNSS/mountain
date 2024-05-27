@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>$Title$</title>
+  <title>차트 출력</title>
 </head>
 <body>
-<h1>Plot Image</h1>
-<img th:src="'data:image/png;base64,' + ${imageData}" alt="Plot Image"/>
+<h1>Plot Images</h1>
+<div>
+  <img th:src="'data:image/png;base64,' + ${imageData1}" alt="Plot Image 1"/>
+</div>
+<div>
+  <img th:src="'data:image/png;base64,' + ${imageData2}" alt="Plot Image 2"/>
+</div>
+<div>
+  <img th:src="'data:image/png;base64,' + ${imageData3}" alt="Plot Image 3"/>
+</div>
+<div>
+  <img th:src="'data:image/png;base64,' + ${imageData4}" alt="Plot Image 4"/>
+</div>
+
 </body>
 </html>

@@ -5,7 +5,8 @@
   <script>
     function handleSearch(event) {
       const searchType = document.querySelector('select[name="searchType"]').value;
-      if (searchType === 'all') {
+      const keyword = document.querySelector('input[name="keyword"]').value; // 키워드 가져오기
+      if (keyword.trim() === '') { // 키워드가 비어있으면
         event.preventDefault(); // 폼의 기본 제출을 막습니다.
         window.location.href = 'http://localhost:9090/manager/viewBbsAll'; // 전체 게시글 조회 페이지로 이동합니다.
       }

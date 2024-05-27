@@ -48,4 +48,9 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
   public List<ManagerBbs> searchBynickname(String nickname) {
     return managerBbsDAO.searchBynickname(nickname);
   }
+
+  @Override
+  public List<ManagerBbs> searchByAll(String keyword) {
+    return managerBbsDAO.searchByAll(keyword);
+  }
 }

@@ -31,6 +31,7 @@ public class ManagerController {
   public String home() {
     return "manager/main";
   }
+
   @GetMapping("/viewBbsAll")
   public String getAllBbs(Model model) {
     List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
@@ -39,15 +40,21 @@ public class ManagerController {
     return "manager/mReadBbs";
   }
 
-  @GetMapping("/searchBbs")
-  public String search(
-          @RequestParam(name = "searchType") String searchType,
-          @RequestParam(name = "keyword") String keyword,
-          Model model
-  ) {
-    List<ManagerBbs> list;
+@GetMapping("/searchBbs")
+public String search(
+        @RequestParam(name = "searchType") String searchType,
+        @RequestParam(name = "keyword", required = false) String keyword, // keyword를 필수로 받지 않음
+        Model model
+) {
+  List<ManagerBbs> list;
 
+  if (keyword == null || keyword.isEmpty()) { // keyword가 없거나 비어있으면
+    list = managerBbsSVC.viewBbsAll(); // 모든 게시글을 검색
+  } else {
     switch (searchType) {
+      case "all" :
+        list = managerBbsSVC.searchByAll(keyword);
+        break;
       case "title":
         list = managerBbsSVC.searchByTitle(keyword);
         break;
@@ -61,11 +68,12 @@ public class ManagerController {
         list = new ArrayList<>(); // 기본 빈 리스트
         break;
     }
-
-    model.addAttribute("list", list);
-    log.info("list={}",list);
-    return "manager/msearchResults";
   }
+
+  model.addAttribute("list", list); // 모델에 list 속성 추가
+  return "manager/msearchResults"; // 템플릿 이름 반환
+}
+
   @GetMapping("/comBbs")
   public String mReadComplain(Model model){
     List<ManagerBbs> list = managerBbsSVC.mReadComplain();
@@ -93,32 +101,40 @@ public class ManagerController {
     return "manager/mReadInquiry";
   }
   @GetMapping("/plot")
-  public String showplot(Model model){
-    String  INTERPRETER_PATH = "d:/kdt/anaconda3/python.exe";
+  public String showPlot(Model model) {
+    // 파이썬 설치 위치
+    String INTERPRETER_PATH = "d:/kdt/anaconda3/python.exe";
     final String SOURCE_PATH = "d:/kdt/projects/pythonDemo2/visualization";
+
     // 파이썬 스크립트 실행
-    ProcessBuilder processBuilder = new ProcessBuilder( INTERPRETER_PATH, "review_data_mountain.py");
+    ProcessBuilder processBuilder = new ProcessBuilder(INTERPRETER_PATH, "review.py");
     processBuilder.directory(new File(SOURCE_PATH));
 
-//    외부 스크립트 파일 실행 결과를 저장하기 위한 문자열 객체
+    // 외부 스크립트 파일 실행 결과를 저장하기 위한 문자열 객체
     StringBuilder result = new StringBuilder();
 
     try {
-      Process process = processBuilder.start();  //외부 스크립트 실행
-//      외부 스크립트 실행 결과를 읽어들여 메모리에 저장
+      Process process = processBuilder.start();  // 외부 스크립트 실행
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
       String line;
       while ((line = reader.readLine()) != null) {
-        result.append(line);
+        result.append(line).append("\n");
       }
       process.waitFor();
     } catch (IOException | InterruptedException e) {
       e.printStackTrace();
     }
 
+    // 구분자를 기준으로 결과를 나눔
+    String[] images = result.toString().split("---END---");
+
     // base64 인코딩된 이미지 데이터를 모델에 추가
-    model.addAttribute("imageData", result.toString());
+    for (int i = 0; i < images.length; i++) {
+      model.addAttribute("imageData" + (i + 1), images[i].trim());
+    }
+
     return "manager/plot";
   }
+
 }
 

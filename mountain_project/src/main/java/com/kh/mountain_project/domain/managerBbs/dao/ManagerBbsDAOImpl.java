@@ -265,4 +265,60 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
     return list;
   }
 
+  //전체 검색
+
+  @Override
+  public List<ManagerBbs> searchByAll(String keyword) {
+    String query = "SELECT " +
+            " m.member_id AS member_id, " +
+            " m.nickname AS member_nickname, " +
+            " b.bbs_id AS bbs_id, " +
+            " b.title AS bbs_title, " +
+            " b.bcontent AS bbs_content, " +
+            " b.hit AS bbs_hit, " +
+            " b.staring AS bbs_staring, " +
+            " b.ctime AS bbs_ctime, " +
+            " b.status AS bbs_status, " +
+            " b.cdate AS bbs_cdate, " +
+            " b.udate AS bbs_udate, " +
+            " mt.MNTN_CODE AS mountain_code, " +
+            " mt.MNTN_NM AS mountain_name, " +
+            " mt.MNTN_loc AS mountain_loc " +
+            " FROM bbs b " +
+            " RIGHT JOIN member m ON m.member_id = b.member_id " +
+            " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
+            " WHERE b.status != 'D' " +
+            " AND ( m.nickname LIKE :keyword" +
+            " OR mt.MNTN_NM LIKE :keyword" +
+            " OR b.title LIKE :keyword ) ";
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("keyword", "%" + keyword + "%");
+
+    List<ManagerBbs> list = template.query(query, params, (ResultSet rs) -> {
+      List<ManagerBbs> resultList = new ArrayList<>();
+      while (rs.next()) {
+        ManagerBbs managerBbs = new ManagerBbs();
+        managerBbs.setMemberId(rs.getLong("member_id"));
+        managerBbs.setNickname(rs.getString("member_nickname"));
+        managerBbs.setBbsId(rs.getLong("bbs_id"));
+        managerBbs.setTitle(rs.getString("bbs_title"));
+        managerBbs.setBcontent(rs.getString("bbs_content"));
+        managerBbs.setHit(rs.getInt("bbs_hit"));
+        managerBbs.setStaring(rs.getInt("bbs_staring"));
+        managerBbs.setCtime(rs.getInt("bbs_ctime"));
+        managerBbs.setStatus(rs.getString("bbs_status"));
+        Timestamp cdateTimestamp = rs.getTimestamp("bbs_cdate");
+        managerBbs.setCdate(cdateTimestamp != null ? cdateTimestamp.toLocalDateTime() : null);
+        Timestamp udateTimestamp = rs.getTimestamp("bbs_udate");
+        managerBbs.setUdate(udateTimestamp != null ? udateTimestamp.toLocalDateTime() : null);
+        managerBbs.setMntnCode(rs.getLong("mountain_code"));
+        managerBbs.setMntnNm(rs.getString("mountain_name"));
+        managerBbs.setMntnLoc(rs.getString("mountain_loc"));
+        resultList.add(managerBbs);
+      }
+      return resultList;
+    });
+    return list;
+  }
 }

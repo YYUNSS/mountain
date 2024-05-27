@@ -60,4 +60,7 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
     });
     return list;
   }
+
+  //문의글 검색
+
 }
