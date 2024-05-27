@@ -14,10 +14,7 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
   ManagerBbsSVSImpl(ManagerBbsDAO managerBbsDAO){
     this.managerBbsDAO = managerBbsDAO;
   }
-  @Override
-  public List<ManagerBbs> mReadAll() {
-    return managerBbsDAO.mReadAll();
-  }
+
 
   @Override
   public List<ManagerBbs> mReadComplain() {
@@ -52,5 +49,15 @@ public class ManagerBbsSVSImpl implements ManagerBbsSVC{
   @Override
   public List<ManagerBbs> searchByAll(String keyword) {
     return managerBbsDAO.searchByAll(keyword);
+  }
+
+  @Override
+  public List<ManagerBbs> viewBbsAll(Long reqPage, Long recordCnt) {
+    return managerBbsDAO.viewBbsAll(reqPage,recordCnt);
+  }
+
+  @Override
+  public int totalCnt() {
+    return managerBbsDAO.totalCnt();
   }
 }

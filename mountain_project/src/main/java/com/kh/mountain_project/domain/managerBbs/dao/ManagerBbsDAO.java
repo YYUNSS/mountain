@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface ManagerBbsDAO {
 
-  //게시판 목록 불러오기
-  List<ManagerBbs> mReadAll();
-
   //신고된 게시판만 조회하기
   List<ManagerBbs> mReadComplain();
 
@@ -29,6 +26,12 @@ public interface ManagerBbsDAO {
 
   // 전체 검색
   List <ManagerBbs> searchByAll(String keyword);
+
+  // 전체 조회(페이징)
+  List <ManagerBbs> viewBbsAll(Long reqPage, Long recordCnt);
+
+  //총레코드 건수
+  int totalCnt();
 
   //단건 조회(상세조회)
 

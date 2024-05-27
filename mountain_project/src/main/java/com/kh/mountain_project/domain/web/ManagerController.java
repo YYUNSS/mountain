@@ -135,6 +135,26 @@ public String search(
 
     return "manager/plot";
   }
+ // 관리자 게시글 목록(페이징)
+  @GetMapping   // GET http://localhost:9090/products?reqPage=2&reqCnt=10
+  public String findAllByPaging(
+          Model model,
+          @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
+          @RequestParam(value = "reqCnt", defaultValue = "10") Long reqCnt,   // 레코드 수
+          @RequestParam(value = "cpgs", defaultValue = "1") Long cpgs,   //페이지 그룹 시작번호
+          @RequestParam(value = "cp", defaultValue = "1") Long cp   // 현재 페이지
+  ){
+
+    List<ManagerBbs> list = managerBbsSVC.viewBbsAll(reqPage, reqCnt);
+    int totalCnt = managerBbsSVC.totalCnt();
+
+    model.addAttribute("list", list);
+    model.addAttribute("totalCnt", totalCnt);
+    model.addAttribute("cpgs", cpgs);
+    model.addAttribute("cp", cp);
+
+    return "manager/mreadBbs";
+  }
 
 }
 

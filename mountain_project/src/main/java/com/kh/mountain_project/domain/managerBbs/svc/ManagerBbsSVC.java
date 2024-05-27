@@ -5,8 +5,6 @@ import com.kh.mountain_project.domain.entity.ManagerBbs;
 import java.util.List;
 
 public interface ManagerBbsSVC {
-  //게시판 목록 불러오기
-  List<ManagerBbs> mReadAll();
 
   //신고된 게시판만 조회하기
   List<ManagerBbs> mReadComplain();
@@ -30,5 +28,10 @@ public interface ManagerBbsSVC {
 
   // 전체 검색
   List <ManagerBbs> searchByAll(String keyword);
+
+  List <ManagerBbs> viewBbsAll(Long reqPage, Long recordCnt);
+
+  //토탈 건수
+  int totalCnt();
 
 }
