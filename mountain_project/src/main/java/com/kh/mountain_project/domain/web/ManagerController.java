@@ -32,13 +32,13 @@ public class ManagerController {
     return "manager/main";
   }
 
-  @GetMapping("/viewBbsAll")
-  public String getAllBbs(Model model) {
-    List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
-    model.addAttribute("list", list);
-    log.info("list = {}", list);
-    return "manager/mReadBbs";
-  }
+//  @GetMapping("/viewBbsAll")
+//  public String getAllBbs(Model model) {
+//    List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
+//    model.addAttribute("list", list);
+//    log.info("list = {}", list);
+//    return "manager/mReadBbs";
+//  }
 
 @GetMapping("/searchBbs")
 public String search(
@@ -47,9 +47,10 @@ public String search(
         Model model
 ) {
   List<ManagerBbs> list;
-
+  Long reqPage = 1L;
+  Long reqCnt = 15L;
   if (keyword == null || keyword.isEmpty()) { // keyword가 없거나 비어있으면
-    list = managerBbsSVC.viewBbsAll(); // 모든 게시글을 검색
+    list = managerBbsSVC.viewBbsAll(reqPage, reqCnt); // 모든 게시글을 검색
   } else {
     switch (searchType) {
       case "all" :
@@ -136,11 +137,11 @@ public String search(
     return "manager/plot";
   }
  // 관리자 게시글 목록(페이징)
-  @GetMapping   // GET http://localhost:9090/products?reqPage=2&reqCnt=10
+  @GetMapping("viewBbsAll")   // GET http://localhost:9090/products?reqPage=2&reqCnt=10
   public String findAllByPaging(
           Model model,
           @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
-          @RequestParam(value = "reqCnt", defaultValue = "10") Long reqCnt,   // 레코드 수
+          @RequestParam(value = "reqCnt", defaultValue = "15") Long reqCnt,   // 레코드 수
           @RequestParam(value = "cpgs", defaultValue = "1") Long cpgs,   //페이지 그룹 시작번호
           @RequestParam(value = "cp", defaultValue = "1") Long cp   // 현재 페이지
   ){
