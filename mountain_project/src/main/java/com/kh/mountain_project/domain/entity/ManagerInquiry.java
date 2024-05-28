@@ -12,7 +12,9 @@ public class ManagerInquiry {
 
   // MEMBER_ID	작성자멤버ID			NUMBER	8
   private Long memberId;
-  
+
+  // 작성자 id(email)
+  private String memberemail;
   // 닉네임
   private String nickname;
 

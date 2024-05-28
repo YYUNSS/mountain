@@ -19,4 +19,19 @@ public class ManagerInquirySVCImpl implements ManagerInquirySVC {
   public List<ManagerInquiry> viewInquiryAll() {
     return managerInquiryDAO.viewInquiryAll();
   }
+
+  @Override
+  public List<ManagerInquiry> viewInquiryNull() {
+    return managerInquiryDAO.viewInquiryNull();
+  }
+
+  @Override
+  public List<ManagerInquiry> viewInquiryComplete() {
+    return managerInquiryDAO.viewInquiryComplete();
+  }
+
+  @Override
+  public List<ManagerInquiry> viewInquiryProgress() {
+    return managerInquiryDAO.viewInquiryProgress();
+  }
 }

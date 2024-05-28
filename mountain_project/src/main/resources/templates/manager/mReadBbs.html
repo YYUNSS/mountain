@@ -1,59 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <title>게시판 조회</title>
+  <script src="/common/js/paginaiton.js" defer></script>
 </head>
+
 <body>
-<h1>검색 결과</h1>
-<form th:action="@{/manager/searchBbs}" method="get" onsubmit="handleSearch(event)">
-  <select name="searchType">
-    <option value="all" selected> 전체</option>
-    <option value="title">제목</option>
-    <option value="mntnName">산 이름</option>
-    <option value="nickname">작성자</option>
-  </select>
-  <input type="text" name="keyword" placeholder="검색어" />
-  <button type="submit">검색</button>
-</form>
-<form id="frm" action="manager/comBbs" method="POST">
-  <div>
-    <table>
-      <thead>
-      <tr>
-        <th>선택</th>
-        <th>닉네임</th>
-        <th>제목</th>
-        <th>내용</th>
-        <th>조회수</th>
-        <th>평점</th>
-        <th>작성일</th>
-        <th>수정일</th>
-        <th>산 이름</th>
-        <th>글 상태</th>
-      </tr>
-      </thead>
-      <tbody class="rows">
-      <tr class="row" th:each="bbs : ${list}">
-        <td class="chk"><input type="checkbox" name="bbsIds" th:value="${bbs.bbsId}"/></td>
-        <td th:text="${bbs.nickname}"></td>
-        <td th:text="${bbs.title}"></td>
-        <td th:text="${bbs.bcontent}"></td>
-        <td th:text="${bbs.hit}"></td>
-        <td th:text="${bbs.staring}"></td>
-        <td th:text="${bbs.cdate}"></td>
-        <td th:text="${bbs.udate}"></td>
-        <td th:text="${bbs.mntnNm}"></td>
-        <td th:text="${bbs.status}"></td>
-      </tr>
-      </tbody>
-    </table>
+  <h1>검색 결과</h1>
+  <form th:action="@{/manager/searchBbs}" method="get" onsubmit="handleSearch(event)">
+    <select name="searchType">
+      <option value="all" selected> 전체</option>
+      <option value="title">제목</option>
+      <option value="mntnName">산 이름</option>
+      <option value="nickname">작성자</option>
+    </select>
+    <input type="text" name="keyword" placeholder="검색어" />
+    <button type="submit">검색</button>
+  </form>
+  <form id="frm" action="manager/comBbs" method="POST">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>선택</th>
+            <th>닉네임</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>조회수</th>
+            <th>평점</th>
+            <th>작성일</th>
+            <th>수정일</th>
+            <th>산 이름</th>
+            <th>글 상태</th>
+          </tr>
+        </thead>
+        <tbody class="rows">
+          <tr class="row" th:each="bbs : ${list}">
+            <td class="chk"><input type="checkbox" name="bbsIds" th:value="${bbs.bbsId}" /></td>
+            <td th:text="${bbs.nickname}"></td>
+            <td th:text="${bbs.title}"></td>
+            <td th:text="${bbs.bcontent}"></td>
+            <td th:text="${bbs.hit}"></td>
+            <td th:text="${bbs.staring}"></td>
+            <td th:text="${bbs.cdate}"></td>
+            <td th:text="${bbs.udate}"></td>
+            <td th:text="${bbs.mntnNm}"></td>
+            <td th:text="${bbs.status}"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div>
       <button type="submit" id="delBtn">삭제</button>
     </div>
     </div>
-</form>
-<h3><a href="http://localhost:9090/manager/comBbs "> 신고글</a></h3>
-<div id="pagination"></div>
+  </form>
+  <h3><a href="http://localhost:9090/manager/comBbs "> 신고글</a></h3>
+
+  <div id="pagination">
+    <button id="firstPage">처음</button>
+    <button id="prevPage">이전</button>
+    <span id="pages"></span>
+    <button id="nextPage">다음</button>
+    <button id="lastPage">마지막</button>
+</div>
+
+
+  <script th:inline="javascript">
+    // JavaScript 변수로 서버 측에서 전달된 변수 저장
+    const cp = /*[[${cp}]]*/ null;
+    const cpgs = /*[[${cpgs}]]*/ null;
+    const reqPage = /*[[${reqPage}]]*/ null;
+    const totalCnt = /*[[${totalCnt}]]*/ null;
+
+      // 페이지 버튼 생성 및 페이지 이동 함수
+      function renderPagination(currentPage, totalPages) {
+      const pagesContainer = document.getElementById('pages');
+      pagesContainer.innerHTML = '';
+
+      const startPage = Math.max(1, currentPage - 2);
+      const endPage = Math.min(totalPages, startPage + 4);
+
+      for (let i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.addEventListener('click', () => goToPage(i));
+        pagesContainer.appendChild(pageButton);
+      }
+    }
+
+    // 페이지 이동 함수
+    function goToPage(page) {
+      window.location.href = `/manager/viewBbsAll?reqPage=${page}&reqCnt=10`;
+    }
+
+    // 이전 페이지 이동 버튼 이벤트 처리
+    document.getElementById('prevPage').addEventListener('click', () => {
+      const currentPage = parseInt(document.getElementById('pages').querySelector('button.selected').textContent);
+      if (currentPage > 1) {
+        goToPage(currentPage - 1);
+      }
+    });
+
+    // 다음 페이지 이동 버튼 이벤트 처리
+    document.getElementById('nextPage').addEventListener('click', () => {
+      const currentPage = parseInt(document.getElementById('pages').querySelector('button.selected').textContent);
+      const totalPages = parseInt(totalCnt / 10) + 1; // 서버에서 전달된 변수 사용
+      if (currentPage < totalPages) {
+        goToPage(currentPage + 1);
+      }
+    });
+
+    // 처음 페이지 이동 버튼 이벤트 처리
+    document.getElementById('firstPage').addEventListener('click', () => {
+      goToPage(1);
+    });
+
+    // 마지막 페이지 이동 버튼 이벤트 처리
+    document.getElementById('lastPage').addEventListener('click', () => {
+      const totalPages = parseInt(totalCnt / 10) + 1; // 서버에서 전달된 변수 사용
+      goToPage(totalPages);
+    });
+
+    // 초기 페이지 로드 시 호출
+    renderPagination(cp, cpgs);
+  </script>
 </body>
+
 </html>

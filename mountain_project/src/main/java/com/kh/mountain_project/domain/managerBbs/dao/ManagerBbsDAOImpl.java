@@ -320,7 +320,7 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
   }
 
   @Override
-  public List<ManagerBbs> viewBbsAll(Long reqPage, Long recordCnt) {
+  public List<ManagerBbs> viewBbsAll(Long reqPage, Long recCnt) {
     StringBuffer sql = new StringBuffer();
     sql.append(" SELECT ")
             .append(" m.member_id AS member_id, ")
@@ -346,7 +346,7 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
 
     Map<String, Object> params = new HashMap<>();
     params.put("reqPage", reqPage);
-    params.put("recCnt", recordCnt);
+    params.put("recCnt", recCnt);
 
     List<ManagerBbs> list = template.query(sql.toString(), params, (ResultSet rs) -> {
       List<ManagerBbs> resultList = new ArrayList<>();

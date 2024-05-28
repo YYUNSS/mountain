@@ -6,18 +6,16 @@
   </head>
   <body>
   <h1>문의글 조회</h1>
-
-  <form th:action="@{/manager/searchInquiry}" method="get">
-    <input type="text" name="keyword" placeholder="검색어 입력">
-    <button type="submit">검색</button>
-  </form>
-
+  <h3><a href="http://localhost:9090/manager/viewInquiryNull">처리전</a></h3>
+  <h3><a href="http://localhost:9090/manager/viewInquiryProgress "> 처리중</a></h3>
+  <h3><a href="http://localhost:9090/manager/viewInquiryComplete">처리완료</a></h3>
   <table border="1">
     <thead>
     <tr>
-      <th>문의글 ID</th>
       <th>작성자 ID</th>
-      <th>닉네임</th>
+      <th>작성자 이메일</th>
+      <th>작성자 닉네임</th>
+      <th>문의글 ID</th>
       <th>문의 제목</th>
       <th>문의 상태</th>
       <th>문의 작성일</th>
@@ -26,9 +24,10 @@
     </thead>
     <tbody>
     <tr th:each="inquiry : ${list}">
-      <td th:text="${inquiry.inquiryId}"></td>
       <td th:text="${inquiry.memberId}"></td>
+      <td th:text="${inquiry.memberemail}"></td>
       <td th:text="${inquiry.nickname}"></td>
+      <td th:text="${inquiry.inquiryId}"></td>
       <td th:text="${inquiry.inquiryTitle}"></td>
       <td th:text="${inquiry.inquiryState}"></td>
       <td th:text="${inquiry.inquiryCdate}"></td>
@@ -36,6 +35,5 @@
     </tr>
     </tbody>
   </table>
-
   </body>
   </html>
