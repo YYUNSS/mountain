@@ -34,8 +34,12 @@ public class ManagerController {
   }
 
   @GetMapping("/test")
-  public String upload() {
+  public String uploadtest() {
     return "manager/uploadTest";
+  }
+  @GetMapping("/test2")
+  public String upload() {
+    return "manager/testtest";
   }
 
   //   관리자 목록(no page)

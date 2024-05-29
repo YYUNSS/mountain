@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>이미지 표시</title>
+</head>
+<body>
+<div id="imageContainer">
+  <!-- 여기에 이미지가 추가됩니다 -->
+</div>
+
+<script>
+  // 서버에서 이미지를 가져와서 이미지 컨테이너에 추가하는 함수
+  function loadImage() {
+      // 이미지 요청을 보낼 URL
+      var url = "/images/b/41"; // 적절한 URL로 변경해야 합니다.
+
+      // 이미지 요청 보내기
+      fetch(url)
+          .then(response => response.blob())
+          .then(blob => {
+              var img = document.createElement("img");
+              img.src = URL.createObjectURL(blob);
+              img.alt = "이미지";
+
+              // 이미지를 특정 위치에 추가
+              var imageContainer = document.getElementById("imageContainer");
+              imageContainer.appendChild(img);
+          })
+          .catch(error => console.error('Error fetching image:', error));
+  }
+
+  // 페이지 로드 시 이미지 로드 함수 호출
+  window.onload = function() {
+      loadImage();
+  };
+</script>
+</body>
+</html>
