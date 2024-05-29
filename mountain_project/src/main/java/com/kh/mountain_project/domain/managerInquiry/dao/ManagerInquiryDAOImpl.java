@@ -251,4 +251,11 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
       return Optional.empty();
     }
   }
+
+  // 문의 답변달기
+  @Override
+  public int commentInquiry(Long inquiryId) {
+    return 0;
+  }
 }
+

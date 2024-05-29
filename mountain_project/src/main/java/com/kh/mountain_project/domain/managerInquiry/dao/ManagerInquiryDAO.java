@@ -8,7 +8,6 @@ import java.util.Optional;
 public interface ManagerInquiryDAO {
   //문의 글 목록 전체 보기
   List<ManagerInquiry> viewInquiryAll();
-
   //처리 중인 글의 목록만 보기
   List<ManagerInquiry> viewInquiryProgress();
   //처리 완료인 목록만 보기
@@ -17,4 +16,10 @@ public interface ManagerInquiryDAO {
   List<ManagerInquiry> viewInquiryNull();
   //상세 조회(+댓글)
   Optional<ManagerInquiry> mViewByInquiryId(Long inquiryId);
+  
+  //문의글 답변 달기
+  int commentInquiry(Long inquiryId);
+
+  //문의글 상태 변경
+
 }

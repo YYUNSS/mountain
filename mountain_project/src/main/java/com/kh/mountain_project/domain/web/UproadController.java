@@ -154,14 +154,6 @@ public class UproadController {
 //      }
 //    }
 //  }
-  @RestController
-  public class ImageController {
-
-    private static final String UPLOAD_FOLDER = "D:/attach/";
-    private static final String DB_URL = "jdbc:oracle:thin:@192.168.0.29:1521:xe";
-    private static final String DB_USER = "c##mountain";
-    private static final String DB_PASSWORD ="mountain1234";
-
     @GetMapping("/images/{code}/{rid}")
     public ResponseEntity<byte[]> serveImage(@PathVariable("code") String code, @PathVariable("rid") String rid) {
       Connection conn = null;
@@ -213,5 +205,3 @@ public class UproadController {
       }
     }
   }
-
-}
