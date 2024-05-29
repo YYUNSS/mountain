@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/template2.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>header 80px</div>
+    </header>
+    <nav>gnb</nav>
+    <aside>search</aside>
+    <main>
+      <div class="container">
+        <h3>페이지 제목</h3>
+        <div class="cont1">
+          <h4>서브 제목1</h4>
+          <ul class="cont_list">
+            <li>
+              <div class="sub_cont">
+                <p>내용1</p>
+                <ul class="sub_list">
+                  <li>서브내용1</li>
+                  <li>서브내용2</li>
+                  <li>서브내용3</li>
+                  <li>서브내용4</li>
+                  <li>서브내용5</li>
+                </ul>
+              </div>
+            </li>
+            <li>내용2</li>
+            <li>내용3</li>
+            <li>내용4</li>
+            <li>내용5</li>
+          </ul>
+        </div>
+      </div>
+      <div class="map">map</div>
+    </main>
+  </div>
+  <script>
+    const $p = document.querySelector('p');
+    const $subList = document.querySelector('.sub_list');
+
+    $p.addEventListener('click', evt => {
+      $subList.classList.toggle('slide-in');
+    });
+  </script>
+</body>
+</html>

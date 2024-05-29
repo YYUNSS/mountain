@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의글 개별 조회</title>
+  <link rel="stylesheet" href="/common/css/template.css">
+  <style>
+    table {
+      width: calc(100% - 300px);
+      border-collapse: collapse;
+      margin: 20px auto;
+      /* 위쪽 여백과 가운데 정렬 */
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: var(--color-black);
+      /* 헤더 글자색 */
+    }
+
+    td {
+      text-align: center;
+      /* 표 내용 가운데 정렬 */
+    }
+
+    .wrap h4 {
+      line-height: 300px;
+      margin-top: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>header 80px</div>
+    </header>
+    <nav>gnb</nav>
+    <aside>search</aside>
+    <main>
+      <div class="container">
+        <h4>문의글</h4>
+        <form id="frm" action="/comBbs" method="POST">
+          <table>
+            <tr>
+              <th><label for="inquiryId">문의글 아이디</label></th>
+              <td th:text="${inquiry.inquiryId}"></td>
+            </tr>
+            <tr>
+              <th><label for="nickname">작성자</label></th>
+              <td th:text="${inquiry.nickname}"></td>
+            </tr>
+            <tr>
+              <th><label for="title">제목</label></th>
+              <td th:text="${inquiry.inquiryTitle}"></td>
+            </tr>
+            <tr>
+              <th><label for="content">내용</label></th>
+              <td th:text="${inquiry.inquiryContent}"></td>
+            </tr>
+            <tr>
+              <th><label for="cdate">작성일자</label></th>
+              <td th:text="${#temporals.format(inquiry.inquiryCdate,'yyyy년 MM월 dd일')}"></td>
+            </tr>
+            <tr>
+              <th><label for="udate">수정일자</label></th>
+              <td th:text="${#temporals.format(inquiry.inquiryUdate,'yyyy년 MM월 dd일')}"></td>
+            </tr>
+            <tr>
+              <th><label for="status">처리상태</label></th>
+              <td th:text="${inquiry.inquiryState == 'C' ? '처리 완료' : (inquiry.inquiryState == 'P' ? '처리 중' : '처리 전')}"></td>
+            </tr>
+            <tr>
+              <th><label for="comment">답변내용</label></th>
+              <td><input id="comment" name="comment" type="text" th:value="${inquiry.inquiryComment}"></td>
+            </tr>
+            <tr>
+              <th><label for="commenttime">답변일자</label></th>
+              <td th:text="${inquiry.inquiryCommentCdate}"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </main>
+  </div>
+  <footer>footer</footer>
+</body>
+
+</html>

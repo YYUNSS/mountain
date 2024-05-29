@@ -1,39 +1,105 @@
-  <!DOCTYPE html>
-  <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>게시판 조회</title>
-  </head>
-  <body>
-  <h1>문의글 조회</h1>
-  <h3><a href="http://localhost:9090/manager/viewInquiryNull">처리전</a></h3>
-  <h3><a href="http://localhost:9090/manager/viewInquiryProgress "> 처리중</a></h3>
-  <h3><a href="http://localhost:9090/manager/viewInquiryComplete">처리완료</a></h3>
-  <table border="1">
-    <thead>
-    <tr>
-      <th>작성자 ID</th>
-      <th>작성자 이메일</th>
-      <th>작성자 닉네임</th>
-      <th>문의글 ID</th>
-      <th>문의 제목</th>
-      <th>문의 상태</th>
-      <th>문의 작성일</th>
-      <th>문의 수정일</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="inquiry : ${list}">
-      <td th:text="${inquiry.memberId}"></td>
-      <td th:text="${inquiry.memberemail}"></td>
-      <td th:text="${inquiry.nickname}"></td>
-      <td th:text="${inquiry.inquiryId}"></td>
-      <td th:text="${inquiry.inquiryTitle}"></td>
-      <td th:text="${inquiry.inquiryState}"></td>
-      <td th:text="${inquiry.inquiryCdate}"></td>
-      <td th:text="${inquiry.inquiryUdate}"></td>
-    </tr>
-    </tbody>
-  </table>
-  </body>
-  </html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의 관리</title>
+  <link rel="stylesheet" href="/common/css/template.css">
+  <style>
+    table {
+      width: calc(100% - 600px);
+      border-collapse: collapse;
+      margin: 20px auto;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: var(--color-black);
+    }
+
+    td {
+      text-align: center;
+    }
+
+    .chk {
+      text-align: center;
+    }
+
+    .wrap h4 {
+      line-height: 300px;
+      margin-top: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>header 80px</div>
+    </header>
+    <nav>gnb</nav>
+    <aside>search</aside>
+    <main>
+      <div class="container">
+        <h4>문의 관리</h4>
+        <form>
+          <button type="button" onclick="location.href='/manager/viewInquiryAll'">전체</button>
+          <button type="button" onclick="location.href='/manager/viewInquiryNull'">처리 전</button>
+          <button type="button" onclick="location.href='/manager/viewInquiryProgress'">처리 중</button>
+          <button type="button" onclick="location.href='/manager/viewInquiryComplete'">처리 완료</button>
+        </form>
+        <table>
+          <thead>
+            <tr>
+              <th>작성자 ID</th>
+              <th>작성자 이메일</th>
+              <th>작성자</th>
+              <th>문의글 ID</th>
+              <th>문의 제목</th>
+              <th>문의 작성일</th>
+              <th>문의 수정일</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr class="row" th:each="inquiry : ${list}" th:data-inquiry-id="${inquiry.inquiryId}">
+              <td th:text="${inquiry.memberId}"></td>
+              <td th:text="${inquiry.memberemail}"></td>
+              <td th:text="${inquiry.nickname}"></td>
+              <td th:text="${inquiry.inquiryId}"></td>
+              <td th:text="${inquiry.inquiryTitle}"></td>
+              <td th:text="${#temporals.format(inquiry.inquiryCdate, 'yyyy년 MM월 dd일')}"></td>
+              <td th:text="${#temporals.format(inquiry.inquiryUdate, 'yyyy년 MM월 dd일')}"></td>
+              <td th:text="${inquiry.inquiryState == 'C' ? '처리 완료' : (inquiry.inquiryState == 'P'?'처리 중':'처리 전')}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer>footer</footer>
+  </div>
+</body>
+<script>
+  document.getElementById('rows').addEventListener('click', function (evt) {
+    // input 요소 이면서 checkbox는 제외
+    if (evt.target.tagName === 'INPUT' && evt.target.getAttribute('type') === 'checkbox') {
+      return;
+    }
+    // td 요소 중 checkbox 있는 td는 제외
+    if (evt.target.tagName === 'TD' && evt.target.classList.contains('chk')) {
+      return;
+    }
+    const row = evt.target.closest('.row');
+    const inquiryId = row.dataset.inquiryId;
+    location.href = `/manager/${inquiryId}/detail`;
+  });
+</script>
+
+</html>

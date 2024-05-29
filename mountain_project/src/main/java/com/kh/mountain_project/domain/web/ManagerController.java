@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -32,48 +33,25 @@ public class ManagerController {
     return "manager/main";
   }
 
-  // 관리자 게시글 목록(페이징)
-//  @GetMapping("viewBbsAll")   // GET http://localhost:9090/manager/viewBbsAll?reqPage=2&reqCnt=10
-//  public String findAllByPaging(
-//          Model model,
-//          @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
-//          @RequestParam(value = "recCnt", defaultValue = "10") Long recCnt,   // 레코드 수
-//          @RequestParam(value = "cpgs", defaultValue = "1") Long cpgs,   //페이지 그룹 시작번호
-//          @RequestParam(value = "cp", defaultValue = "1") Long cp   // 현재 페이지
-//  ){
-//
-//    List<ManagerBbs> list = managerBbsSVC.viewBbsAll(reqPage, recCnt);
-//    int totalCnt = managerBbsSVC.totalCnt();
-//
-//    model.addAttribute("list", list);
-//    model.addAttribute("totalCnt", totalCnt);
-//    model.addAttribute("cpgs", cpgs);
-//    model.addAttribute("cp", cp);
-//
-//    return "manager/mreadBbs";
-//  }
-  @GetMapping("viewBbsAll")   // GET http://localhost:9090/products?reqPage=2&reqCnt=10
-  public String findAllByPaging(
-          Model model,
-          @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
-          @RequestParam(value = "recCnt", defaultValue = "10") Long recCnt   // 레코드 수
-  ){
-
-    List<ManagerBbs> list = managerBbsSVC.viewBbsAll(reqPage, recCnt);
-    int totalCnt = managerBbsSVC.totalCnt(); // 총 게시물 수 가져오기
-
-    model.addAttribute("list", list);
-    model.addAttribute("totalCnt", totalCnt);
-    model.addAttribute("reqPage", reqPage);
-
-    return "manager/mreadBbs";
+  @GetMapping("/test")
+  public String upload() {
+    return "manager/uploadTest";
   }
-  @GetMapping("/searchBbs")
-public String search(
+
+  //   관리자 목록(no page)
+  @GetMapping("/viewBbsAll")
+  public String getAllBbs(Model model) {
+    List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
+    model.addAttribute("list", list);
+    log.info("list = {}", list);
+    return "manager/mReadBbs";
+  }
+    @GetMapping("/searchBbs")
+  public String search(
         @RequestParam(name = "searchType") String searchType,
         @RequestParam(name = "keyword", required = false) String keyword, // keyword를 필수로 받지 않음
         Model model
-) {
+  ) {
   List<ManagerBbs> list;
   Long reqPage = 1L;
   Long reqCnt = 15L;
@@ -99,16 +77,15 @@ public String search(
     }
   }
 
-  model.addAttribute("list", list); // 모델에 list 속성 추가
-  return "manager/mreadBbs"; // 템플릿 이름 반환
+    model.addAttribute("list", list);
+  return "manager/mreadBbs";
 }
-
   @GetMapping("/comBbs")
   public String mReadComplain(Model model){
     List<ManagerBbs> list = managerBbsSVC.mReadComplain();
     model.addAttribute("list", list);
     log.info("list={}",list);
-    return "manager/mReadComplain";
+    return "manager/mReadBbs";
   }
 
   @PatchMapping("/comBbs")
@@ -151,6 +128,14 @@ public String search(
     log.info("list={}", list);
     return "manager/mReadInquiry";
   }
+  //문의글 개별 조회
+  @GetMapping("/{mInquiryId}/detail")
+  public String mViewByInquiryId(@PathVariable("mInquiryId") Long inquiryId, Model model) {
+    Optional<ManagerInquiry> findedInquiry = managerInquirySVC.mViewByInquiryId(inquiryId);
+    ManagerInquiry managerInquiry = findedInquiry.orElseThrow();
+    model.addAttribute("inquiry", managerInquiry);
+    return "/manager/detailInquiry";
+  }
 
   @GetMapping("/plot")
   public String showPlot(Model model) {
@@ -187,15 +172,43 @@ public String search(
 
     return "manager/plot";
   }
+  
 
-  // 관리자 목록(no page)
-//  @GetMapping("/viewBbsAll")
-//  public String getAllBbs(Model model) {
-//    List<ManagerBbs> list = managerBbsSVC.viewBbsAll();
+  // 관리자 게시글 목록(페이징)
+//  @GetMapping("viewBbsAll")   // GET http://localhost:9090/manager/viewBbsAll?reqPage=2&reqCnt=10
+//  public String findAllByPaging(
+//          Model model,
+//          @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
+//          @RequestParam(value = "recCnt", defaultValue = "10") Long recCnt,   // 레코드 수
+//          @RequestParam(value = "cpgs", defaultValue = "1") Long cpgs,   //페이지 그룹 시작번호
+//          @RequestParam(value = "cp", defaultValue = "1") Long cp   // 현재 페이지
+//  ){
+//
+//    List<ManagerBbs> list = managerBbsSVC.viewBbsAll(reqPage, recCnt);
+//    int totalCnt = managerBbsSVC.totalCnt();
+//
 //    model.addAttribute("list", list);
-//    log.info("list = {}", list);
-//    return "manager/mReadBbs";
+//    model.addAttribute("totalCnt", totalCnt);
+//    model.addAttribute("cpgs", cpgs);
+//    model.addAttribute("cp", cp);
+//
+//    return "manager/mreadBbs";
 //  }
-
+//  @GetMapping("viewBbsAll")   // GET http://localhost:9090/products?reqPage=2&reqCnt=10
+//  public String findAllByPaging(
+//          Model model,
+//          @RequestParam(value = "reqPage", defaultValue = "1") Long reqPage, // 요청 페이지
+//          @RequestParam(value = "recCnt", defaultValue = "10") Long recCnt   // 레코드 수
+//  ){
+//
+//    List<ManagerBbs> list = managerBbsSVC.viewBbsAll(reqPage, recCnt);
+//    int totalCnt = managerBbsSVC.totalCnt(); // 총 게시물 수 가져오기
+//
+//    model.addAttribute("list", list);
+//    model.addAttribute("totalCnt", totalCnt);
+//    model.addAttribute("reqPage", reqPage);
+//
+//    return "manager/mreadBbs";
+//  }
 }
 

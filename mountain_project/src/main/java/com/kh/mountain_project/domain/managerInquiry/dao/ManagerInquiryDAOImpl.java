@@ -23,7 +23,7 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
   }
   @Override
   public List<ManagerInquiry> viewInquiryAll() {
-    String query = " SELECT " +
+            String query = " SELECT " +
             " mb.member_ID as member_id, " +
             " mb.id as member_email, " +
             " mb.NICKNAME AS member_nickname, " +
@@ -46,8 +46,10 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
       List<ManagerInquiry> resultList = new ArrayList<>();
       while (rs.next()) {
         ManagerInquiry managerInquiry = new ManagerInquiry();
-        managerInquiry.setInquiryId(rs.getLong("inquiry_id"));
+        managerInquiry.setMemberemail(rs.getString("member_email"));
+        managerInquiry.setNickname(rs.getString("member_nickname"));
         managerInquiry.setMemberId(rs.getLong("member_id"));
+        managerInquiry.setInquiryId(rs.getLong("inquiry_id"));
         managerInquiry.setInquiryTitle(rs.getString("inquiry_title"));
         managerInquiry.setInquiryContent(rs.getString("inquiry_content"));
         managerInquiry.setInquiryComment(rs.getString("inquiry_comment"));
@@ -60,7 +62,6 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
         managerInquiry.setInquiryCommentCdate(inquiryCommentCdateTimestamp != null ? inquiryCommentCdateTimestamp.toLocalDateTime() : null);
         Timestamp inquiryCommentUdateTimestamp = rs.getTimestamp("inquiry_comment_udate");
         managerInquiry.setInquiryCommentUdate(inquiryCommentUdateTimestamp != null ? inquiryCommentUdateTimestamp.toLocalDateTime() : null);
-        managerInquiry.setNickname(rs.getString("member_nickname"));
         resultList.add(managerInquiry);
       }
       return resultList;

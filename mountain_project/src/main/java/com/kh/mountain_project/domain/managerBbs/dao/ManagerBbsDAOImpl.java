@@ -2,7 +2,6 @@ package com.kh.mountain_project.domain.managerBbs.dao;
 
 import com.kh.mountain_project.domain.entity.ManagerBbs;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -26,14 +25,61 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
 
   @Override
   public List<ManagerBbs> mReadComplain() {
-    StringBuffer sql = new StringBuffer();
-    sql.append(" select BBS_ID, MNTN_CODE, TITLE, BCONTENT, STATUS, CDATE, UDATE ");
-    sql.append(" from BBS ");
-    sql.append(" where STATUS = 'W' ");
-    sql.append(" order by cdate desc ");
-    List<ManagerBbs> list = template.query(sql.toString(), BeanPropertyRowMapper.newInstance(ManagerBbs.class));
+    String query = " SELECT " +
+            " m.member_id AS member_id, " +
+            " m.nickname AS member_nickname, " +
+            " b.bbs_id AS bbs_id , " +
+            " b.title AS bbs_title, " +
+            " b.bcontent AS bbs_content, " +
+            " b.hit As bbs_hit, " +
+            " b.staring AS bbs_staring, " +
+            " b.ctime As bbs_ctime, " +
+            " b.status As bbs_status, " +
+            " b.cdate AS bbs_cdate, " +
+            " b.udate AS bbs_udate, " +
+            " mt.MNTN_CODE AS mountain_code, " +
+            " mt.MNTN_NM AS mountain_name, " +
+            " mt.MNTN_loc as mountain_loc " +
+            " FROM bbs b " +
+            " RIGHT JOIN member m ON m.member_id = b.member_id " +
+            " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
+            " Where b.status != 'D' and b.status = 'W' " +
+            " order by b.cdate desc " ;
+
+    List<ManagerBbs> list = template.query(query, (ResultSet rs) -> {
+      List<ManagerBbs> resultList = new ArrayList<>();
+      while (rs.next()) {
+        ManagerBbs managerBbs = new ManagerBbs();
+        managerBbs.setMemberId(rs.getLong("member_id"));
+        managerBbs.setNickname(rs.getString("member_nickname"));
+        managerBbs.setBbsId(rs.getLong("bbs_id"));
+        managerBbs.setTitle(rs.getString("bbs_title"));
+        managerBbs.setBcontent(rs.getString("bbs_content"));
+        managerBbs.setHit(rs.getInt("bbs_hit"));
+        managerBbs.setStaring(rs.getInt("bbs_staring"));
+        managerBbs.setCtime(rs.getInt("bbs_ctime"));
+        managerBbs.setStatus(rs.getString("bbs_status"));
+        Timestamp cdateTimestamp = rs.getTimestamp("bbs_cdate");
+        managerBbs.setCdate(cdateTimestamp != null ? cdateTimestamp.toLocalDateTime() : null);
+        Timestamp udateTimestamp = rs.getTimestamp("bbs_udate");
+        managerBbs.setUdate(udateTimestamp != null ? udateTimestamp.toLocalDateTime() : null);
+        managerBbs.setMntnCode(rs.getLong("mountain_code"));
+        managerBbs.setMntnNm(rs.getString("mountain_name"));
+        managerBbs.setMntnLoc(rs.getString("mountain_loc"));
+        resultList.add(managerBbs);
+      }
+      return resultList;
+    });
     return list;
   }
+//    StringBuffer sql = new StringBuffer();
+//    sql.append(" select BBS_ID, MNTN_CODE, TITLE, BCONTENT, STATUS, CDATE, UDATE ");
+//    sql.append(" from BBS ");
+//    sql.append(" where STATUS = 'W' ");
+//    sql.append(" order by cdate desc ");
+//    List<ManagerBbs> list = template.query(sql.toString(), BeanPropertyRowMapper.newInstance(ManagerBbs.class));
+//    return list;
+//  }
 
   @Override
   public int deleteComplain(List<Long> bbsIds) {

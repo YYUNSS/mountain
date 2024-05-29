@@ -9,7 +9,8 @@
   <style>
     /* 테이블 스타일 */
     table {
-      width: calc(100% - 500px);
+      width: calc(100% - 80px);
+      /* 전체 너비에서 좌우 여백 40px씩 빼기 */
       border-collapse: collapse;
       margin: 20px auto;
       /* 위쪽 여백과 가운데 정렬 */
@@ -39,6 +40,7 @@
     .wrap h4 {
       line-height: 300px;
       margin-top: 200px;
+      font-size: 2.5vh;
     }
   </style>
 </head>
@@ -50,9 +52,9 @@
     </header>
     <nav>gnb</nav>
     <aside>search</aside>
+    <h4>게시판 관리자</h4>
     <main>
       <div class="container">
-        <h4>게시판 관리자</h4>
         <form th:action="@{/manager/searchBbs}" method="get" onsubmit="handleSearch(event)">
           <select name="searchType">
             <option value="all" selected> 전체</option>
@@ -62,7 +64,6 @@
           </select>
           <input type="text" name="keyword" placeholder="검색어" />
           <button type="submit">검색</button>
-          <button type="button" onclick="location.href='/manager/comBbs'">신고글 관리</button>
         </form>
         <form id="frm" method="POST">
           <div>
@@ -88,7 +89,7 @@
                   <td th:text="${#temporals.format(bbs.cdate, 'yyyy년 MM월 dd일')}"></td>
                   <td th:text="${#temporals.format(bbs.udate, 'yyyy년 MM월 dd일')}"></td>
                   <td th:text="${bbs.mntnNm}"></td>
-                  <td th:text="${bbs.status == 'N' ? '-' : (bbs.status == 'W' ? '신고됨' : '기타')}"></td>
+                  <td th:text="${bbs.status == 'N' ? '정상' : (bbs.status == 'W' ? '신고됨' : '기타')}"></td>
                 </tr>
               </tbody>
             </table>
@@ -137,7 +138,6 @@
       }
     }
   }
-
 </script>
 
 </html>
