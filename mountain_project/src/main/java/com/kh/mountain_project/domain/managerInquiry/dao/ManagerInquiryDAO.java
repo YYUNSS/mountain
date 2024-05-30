@@ -18,7 +18,7 @@ public interface ManagerInquiryDAO {
   Optional<ManagerInquiry> mViewByInquiryId(Long inquiryId);
   
   //문의글 답변 달기
-  int commentInquiry(Long inquiryId);
+  int commentInquiry(Long inquiryId, ManagerInquiry managerInquiry);
 
   //문의글 상태 변경
 

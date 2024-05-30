@@ -4,15 +4,14 @@ import com.kh.mountain_project.domain.entity.ManagerInquiry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Repository
@@ -252,10 +251,25 @@ public class ManagerInquiryDAOImpl implements ManagerInquiryDAO{
     }
   }
 
-  // 문의 답변달기
+  // 문의 답변달기+상태변경
   @Override
-  public int commentInquiry(Long inquiryId) {
-    return 0;
+  public int commentInquiry(Long inquiryId, ManagerInquiry managerInquiry) {
+    StringBuffer sql = new StringBuffer();
+    sql.append(" UPDATE manager ");
+    sql.append(" SET inquiry_comment = :inquiry_comment , ");
+    sql.append(" inquiry_state = :inquiry_state , ");
+    sql.append(" inquiry_comment_cdate = SYSDATE, ");
+    sql.append(" inquiry_comment_udate = SYSDATE ");
+    sql.append(" WHERE inquiry_id = :inquiry_id ");
+
+    SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("inquiry_comment", managerInquiry.getInquiryComment())
+            .addValue("inquiry_state", managerInquiry.getInquiryState())
+            .addValue("inquiry_id", inquiryId);
+
+    int updateRowCnt = template.update(sql.toString(), param);
+
+    return updateRowCnt;
   }
 }
 

@@ -16,4 +16,8 @@ public interface ManagerInquirySVC {
 
   //상세 조회(+댓글)
   Optional<ManagerInquiry> mViewByInquiryId(Long inquiryId);
+
+  //문의 답변+상태변경
+  int commentInquiry(Long inquiryId, ManagerInquiry managerInquiry);
+
 }

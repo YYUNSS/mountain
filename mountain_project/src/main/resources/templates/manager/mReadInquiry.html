@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/common/css/template.css">
   <style>
     table {
-      width: calc(100% - 600px);
+      width: calc(100% - 400px);
       border-collapse: collapse;
       margin: 20px auto;
     }
@@ -87,6 +87,19 @@
   </div>
 </body>
 <script>
+    // 제목 10글자 이상이면 그 이상은...으로 표현
+    document.addEventListener('DOMContentLoaded', function () {
+    const titleCells = document.querySelectorAll('td.title');
+    titleCells.forEach(cell => {
+      const text = cell.textContent;
+      if (text.length > 10) {
+        const shortenedText = text.substring(0, 10) + '...';
+        cell.textContent = shortenedText;
+      }
+    });
+  });
+
+  // 상세조회 click event리스너
   document.getElementById('rows').addEventListener('click', function (evt) {
     // input 요소 이면서 checkbox는 제외
     if (evt.target.tagName === 'INPUT' && evt.target.getAttribute('type') === 'checkbox') {

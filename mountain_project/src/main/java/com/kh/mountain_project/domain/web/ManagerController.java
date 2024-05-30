@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -110,7 +112,7 @@ public class ManagerController {
     log.info("list = {}", list);
     return "manager/mReadInquiry";
   }
-  @GetMapping("viewInquiryNull")
+  @GetMapping("/viewInquiryNull")
   public String viewInquiryNull(Model model){
     List<ManagerInquiry> list = managerInquirySVC.viewInquiryNull();
     model.addAttribute("list",list);
@@ -118,14 +120,14 @@ public class ManagerController {
     return "manager/mReadInquiry";
   }
 
-  @GetMapping("viewInquiryComplete")
+  @GetMapping("/viewInquiryComplete")
   public String viewInquiryComplete(Model model){
     List<ManagerInquiry> list = managerInquirySVC.viewInquiryComplete();
     model.addAttribute("list",list);
     log.info("list={}", list);
     return "manager/mReadInquiry";
   }
-  @GetMapping("viewInquiryProgress")
+  @GetMapping("/viewInquiryProgress")
   public String viewInquiryProgress(Model model){
     List<ManagerInquiry> list = managerInquirySVC.viewInquiryProgress();
     model.addAttribute("list",list);
@@ -140,6 +142,31 @@ public class ManagerController {
     model.addAttribute("inquiry", managerInquiry);
     return "/manager/detailInquiry";
   }
+
+  //문의글 답변 달기 처리
+  @PatchMapping("/{inquiryId}/comment")
+  public String commentInquiry(
+          @PathVariable("inquiryId") Long inquiryId,
+          @RequestBody Map<String, String> requestBody,
+          RedirectAttributes redirectAttributes) {
+
+    String inquiryComment = requestBody.get("inquiryComment");
+    String inquiryState = requestBody.get("inquiryState");
+
+    ManagerInquiry managerInquiry = new ManagerInquiry();
+    managerInquiry.setInquiryId(inquiryId);
+    managerInquiry.setInquiryComment(inquiryComment);
+    managerInquiry.setInquiryState(inquiryState);
+
+    int updateRowCnt = managerInquirySVC.commentInquiry(inquiryId, managerInquiry);
+    log.info("updateRowCnt={}", updateRowCnt);
+    log.info("managerInquiry={}", managerInquiry);
+
+//    redirectAttributes.addAttribute("inquiryId", inquiryId);
+    return "redirect:/manager/" + inquiryId + "/detail";
+  }
+
+
 
   @GetMapping("/plot")
   public String showPlot(Model model) {
@@ -176,7 +203,7 @@ public class ManagerController {
 
     return "manager/plot";
   }
-  
+
 
   // 관리자 게시글 목록(페이징)
 //  @GetMapping("viewBbsAll")   // GET http://localhost:9090/manager/viewBbsAll?reqPage=2&reqCnt=10

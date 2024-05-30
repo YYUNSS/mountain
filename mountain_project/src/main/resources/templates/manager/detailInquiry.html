@@ -11,7 +11,6 @@
       width: calc(100% - 300px);
       border-collapse: collapse;
       margin: 20px auto;
-      /* 위쪽 여백과 가운데 정렬 */
     }
 
     th,
@@ -23,12 +22,10 @@
     th {
       background-color: #f2f2f2;
       color: var(--color-black);
-      /* 헤더 글자색 */
     }
 
     td {
       text-align: center;
-      /* 표 내용 가운데 정렬 */
     }
 
     .wrap h4 {
@@ -48,50 +45,100 @@
     <main>
       <div class="container">
         <h4>문의글</h4>
-        <form id="frm" action="/comBbs" method="POST">
+        <form id="frm">
           <table>
             <tr>
-              <th><label for="inquiryId">문의글 아이디</label></th>
-              <td th:text="${inquiry.inquiryId}"></td>
+              <th>문의글 아이디</th>
+              <td id="inquiryId" th:text="${inquiry.inquiryId}"></td>
             </tr>
             <tr>
-              <th><label for="nickname">작성자</label></th>
+              <th>작성자</th>
               <td th:text="${inquiry.nickname}"></td>
             </tr>
             <tr>
-              <th><label for="title">제목</label></th>
+              <th>제목</th>
               <td th:text="${inquiry.inquiryTitle}"></td>
             </tr>
             <tr>
-              <th><label for="content">내용</label></th>
+              <th>내용</th>
               <td th:text="${inquiry.inquiryContent}"></td>
             </tr>
             <tr>
-              <th><label for="cdate">작성일자</label></th>
+              <th>작성일자</th>
               <td th:text="${#temporals.format(inquiry.inquiryCdate,'yyyy년 MM월 dd일')}"></td>
             </tr>
             <tr>
-              <th><label for="udate">수정일자</label></th>
+              <th>수정일자</th>
               <td th:text="${#temporals.format(inquiry.inquiryUdate,'yyyy년 MM월 dd일')}"></td>
             </tr>
             <tr>
-              <th><label for="status">처리상태</label></th>
-              <td th:text="${inquiry.inquiryState == 'C' ? '처리 완료' : (inquiry.inquiryState == 'P' ? '처리 중' : '처리 전')}"></td>
+              <th><label for="inquiryState">처리상태</label></th>
+              <td>
+                <select id="inquiryState" name="inquiryState">
+                  <option value="">처리 전</option>
+                  <option value="P">처리 중</option>
+                  <option value="C">처리 완료</option>
+                </select>
+              </td>
             </tr>
             <tr>
               <th><label for="comment">답변내용</label></th>
               <td><input id="comment" name="comment" type="text" th:value="${inquiry.inquiryComment}"></td>
             </tr>
             <tr>
-              <th><label for="commenttime">답변일자</label></th>
+              <th>답변일자</th>
               <td th:text="${inquiry.inquiryCommentCdate}"></td>
             </tr>
           </table>
+          <button type="button" onclick="submitComment(event)">답변 등록</button>
         </form>
       </div>
     </main>
   </div>
   <footer>footer</footer>
+
+  <script>
+    function submitComment(event) {
+      event.preventDefault(); // 기본 동작 취소
+
+      var inquiryId = document.getElementById('inquiryId').innerText;
+      var comment = document.getElementById('comment').value;
+      var inquiryState = document.getElementById('inquiryState').value;
+
+      if (!comment.trim() && !inquiryState) {
+        alert("처리 상태와 답변을 입력하세요");
+        return;
+      }
+      
+      fetch(`/manager/${inquiryId}/comment`, { 
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          // inquiryId: inquiryId, // inquiryId를 body에 포함하여 전송
+          inquiryComment: comment,
+          inquiryState: inquiryState
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('네트워크 error');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          alert(data.message);
+          window.location.href = `/manager/${inquiryId}/detail`; // 리다이렉트
+        })
+        .catch(error => {
+          console.error('오류 발생:', error);
+          alert("서버 오류가 발생했습니다.");
+        });
+    }
+
+  </script>
 </body>
 
 </html>

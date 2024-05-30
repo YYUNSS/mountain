@@ -2,6 +2,7 @@ package com.kh.mountain_project.domain.managerInquiry.dao;
 
 import com.kh.mountain_project.domain.entity.ManagerInquiry;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,5 +42,24 @@ public class MangerInquiryDAOImplTest {
     Optional<ManagerInquiry> findedinquiry = managerInquiryDAO.mViewByInquiryId(inquiryId);
     ManagerInquiry managerInquiry = findedinquiry.orElse(null);
     log.info("managerInquiry={}", managerInquiry);
+  }
+  @Test
+  void testcomment(){
+    ManagerInquiry managerInquiry = new ManagerInquiry();
+    Long inquiryId = 13L;
+    managerInquiry.setInquiryState("P");
+    managerInquiry.setInquiryComment("DAOImple 테스트입니다.");
+    int updatedRowCnt = managerInquiryDAO.commentInquiry(inquiryId, managerInquiry);
+    if(updatedRowCnt == 0) {
+      Assertions.fail("변경 내역이 없습니다.");
+    }
+    Optional<ManagerInquiry> optionalManagerInquiry = managerInquiryDAO.mViewByInquiryId(inquiryId);
+    if(optionalManagerInquiry.isPresent()){
+      ManagerInquiry fidedInquiry= optionalManagerInquiry.get();
+      org.assertj.core.api.Assertions.assertThat(fidedInquiry.getInquiryComment()).isEqualTo("DAOImple 테스트입니다.");
+      org.assertj.core.api.Assertions.assertThat(fidedInquiry.getInquiryState()).isEqualTo("P");
+    }else{
+      Assertions.fail("해당 문의글이 존재하지 않음");
+    }
   }
 }
