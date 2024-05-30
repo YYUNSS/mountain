@@ -35,15 +35,6 @@ public class ManagerController {
     return "manager/main";
   }
 
-  @GetMapping("/test")
-  public String uploadtest() {
-    return "manager/uploadTest";
-  }
-  @GetMapping("/test2")
-  public String upload() {
-    return "manager/testtest";
-  }
-
   //   관리자 목록(no page)
   @GetMapping("/viewBbsAll")
   public String getAllBbs(Model model) {

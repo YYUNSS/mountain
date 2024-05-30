@@ -219,8 +219,8 @@ public class ManagerBbsDAOImpl implements ManagerBbsDAO {
             " FROM bbs b " +
             " RIGHT JOIN member m ON m.member_id = b.member_id " +
             " LEFT JOIN mountain mt ON b.MNTN_CODE = mt.MNTN_CODE " +
-            " WHERE b.status != 'D' ( AND " +
-            " mt.MNTN_NM LIKE :mntnNm )" +
+            " WHERE b.status != 'D' AND " +
+            " mt.MNTN_NM LIKE :mntnNm " +
             " order by b.cdate desc ";
 
     Map<String, Object> params = new HashMap<>();

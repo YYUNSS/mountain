@@ -7,30 +7,73 @@
   <title>문의글 개별 조회</title>
   <link rel="stylesheet" href="/common/css/template.css">
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      margin-top: 50px;
+    }
+
+    h4 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
     table {
       width: calc(100% - 300px);
       border-collapse: collapse;
       margin: 20px auto;
+      background-color: #fff;
     }
 
     th,
     td {
       border: 1px solid #ddd;
       padding: 10px;
+      vertical-align: middle;
     }
 
     th {
       background-color: #f2f2f2;
-      color: var(--color-black);
+      color: #333;
+      text-align: center;
     }
 
     td {
       text-align: center;
     }
 
-    .wrap h4 {
-      line-height: 300px;
-      margin-top: 200px;
+    input[type="text"],
+    select {
+      width: calc(100% - 20px);
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type="text"] {
+      padding: 50px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -56,12 +99,12 @@
               <td th:text="${inquiry.nickname}"></td>
             </tr>
             <tr>
-              <th>제목</th>
-              <td th:text="${inquiry.inquiryTitle}"></td>
+              <th style="height: 100px;">제목</th>
+              <td style="height: 300px;" th:text="${inquiry.inquiryTitle}"></td>
             </tr>
             <tr>
-              <th>내용</th>
-              <td th:text="${inquiry.inquiryContent}"></td>
+              <th style="height: 100px;">내용</th>
+              <td style="height: 300px;" th:text="${inquiry.inquiryContent}"></td>
             </tr>
             <tr>
               <th>작성일자</th>
@@ -87,7 +130,7 @@
             </tr>
             <tr>
               <th>답변일자</th>
-              <td th:text="${inquiry.inquiryCommentCdate}"></td>
+              <td th:text="${#temporals.format(inquiry.inquiryCommentCdate,'yyyy년 MM월 dd일')}"></td>
             </tr>
           </table>
           <button type="button" onclick="submitComment(event)">답변 등록</button>
@@ -109,8 +152,8 @@
         alert("처리 상태와 답변을 입력하세요");
         return;
       }
-      
-      fetch(`/manager/${inquiryId}/comment`, { 
+
+      fetch(`/manager/${inquiryId}/comment`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -125,6 +168,7 @@
           if (!response.ok) {
             throw new Error('네트워크 error');
           }
+          alert("${inquiryId}에 대한 답변이 등록되었습니다");
           return response.json();
         })
         .then(data => {
@@ -132,10 +176,6 @@
           alert(data.message);
           window.location.href = `/manager/${inquiryId}/detail`; // 리다이렉트
         })
-        .catch(error => {
-          console.error('오류 발생:', error);
-          alert("서버 오류가 발생했습니다.");
-        });
     }
 
   </script>

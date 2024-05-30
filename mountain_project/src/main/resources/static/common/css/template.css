@@ -30,7 +30,7 @@
   box-sizing: border-box;
   text-align: center;
   vertical-align:top;
-  outline: 1px solid tomato;
+  /* outline: 1px solid tomato; */
 }
 
 .wrap {
